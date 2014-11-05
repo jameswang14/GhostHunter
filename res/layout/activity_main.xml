@@ -10,18 +10,18 @@
     android:background="@drawable/splashimage" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/title" 
         android:textColor="#FFFFFF" 
         android:gravity = "center"
-        android:textSize = "35sp" />
+        android:textSize = "30sp" />
     
     <Button 
     	android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/startgame"  
-        android:textSize = "35sp" 
+        android:textSize = "30sp" 
         android:gravity = "center"
         android:textStyle="bold" 
     	    />
@@ -30,7 +30,7 @@
     	android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/settings"  
-        android:textSize = "35sp" 
+        android:textSize = "30sp" 
         android:gravity = "center"
         android:textStyle="bold" 
     	    />"

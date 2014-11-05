@@ -8,7 +8,7 @@ Ryan Aubrey :    rma7qb@virginia.edu 540-250-3750  "Big Daddy"
 
 How to get Started
 ===================
-Download git for your OS 
+Download git for your OS !
 
 Click on "Clone to desktop" in the sidebar on the right
 

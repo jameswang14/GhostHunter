@@ -2,6 +2,7 @@ package com.example.ghosthunter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,10 +12,15 @@ import android.widget.Button;
 public class MainActivity extends Activity {
 	
 	
+	MediaPlayer logoMusic;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		logoMusic = MediaPlayer.create(MainActivity.this, R.raw.favoritesong);
+		logoMusic.start();
 		
 		//Setting up Menu Button References
 		Button gameStart = (Button) findViewById(R.id.startGameButton);
@@ -62,4 +68,11 @@ public class MainActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		logoMusic.release();
+	}
+	
 }

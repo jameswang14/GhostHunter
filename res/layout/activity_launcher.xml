@@ -2,20 +2,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/splashimage"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.ghosthunter.Launcher"
-     android:background="@drawable/splashimage" > 
+    tools:context="com.example.ghosthunter.Launcher" >
 
     <TextView
+        android:id="@+id/textView1"
         android:layout_width="fill_parent"
-        android:gravity="center"
-        android:textSize="25dp"
-        android:textColor="#ffffff"
-        android:textStyle="italic"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:text="@string/line1"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:textStyle="italic" />
 
+    <ImageView
+        android:id="@+id/imagelogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView1"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_marginBottom="44dp"
+        android:contentDescription="@string/description"
+        android:src="@drawable/titlefont" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView1"
+        android:layout_alignLeft="@+id/textView1"
+        android:gravity="center"
+        android:text="@string/line2"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/textView1"
+        android:gravity="center"
+        android:text="@string/line3"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:textStyle="italic" />
+
+     <TextView
+         android:id="@+id/textView4"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/textView3"
+         android:layout_below="@+id/textView3"
+         android:gravity="center"
+         android:text="@string/line4"
+         android:textColor="#ffffff"
+         android:textSize="20sp"
+         android:textStyle="italic" />
+    
 </RelativeLayout>

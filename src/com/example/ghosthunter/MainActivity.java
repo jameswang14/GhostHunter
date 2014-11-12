@@ -11,6 +11,7 @@ import android.widget.Button;
 
 public class MainActivity extends Activity {
 	
+	//THIS IS THE CHANGE
 	
 	MediaPlayer logoMusic;
 	

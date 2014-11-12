@@ -41,7 +41,10 @@
         android:text="@string/line2"
         android:textColor="#ffffff"
         android:textSize="20sp"
-        android:textStyle="italic" />
+        android:textStyle="italic" 
+        android:shadowColor="#000000"
+        android:shadowDx="5"
+        android:shadowDy="5"/>
 
     <TextView
         android:id="@+id/textView3"

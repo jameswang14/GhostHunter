@@ -1,16 +1,20 @@
 package com.example.ghosthunter;
 
 import android.app.Activity;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class GamePage extends Activity {
+	
+	Canvas c = new Canvas();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_game_page);
+		setContentView( new DrawingPanel(this));
+
 	}
 
 	@Override
@@ -31,4 +35,5 @@ public class GamePage extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
 }

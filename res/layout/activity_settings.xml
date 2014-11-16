@@ -14,9 +14,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="SETTINGS"
-        android:textSize="25dp"
+        android:textSize="50sp"
+        android:textStyle="bold"
         android:textColor="#FFFFFF"
         android:gravity="center"
+        android:id="@+id/settingsTitle"
         />
     
     
@@ -34,6 +36,7 @@
             android:layout_weight="50"
             android:gravity="center"
             android:textColor="#FFFFFF"
+            android:textSize="30sp"
             android:text="Difficulty" />
 
         <TextView
@@ -44,7 +47,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="50"
             android:gravity="center"
-            android:text="Players" />
+            android:textSize="30sp"
+            android:text="Desription" />
     </LinearLayout>
 
     <LinearLayout
@@ -57,13 +61,15 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:id="@+id/rgDifficulty">"
 
             <RadioButton
                 android:id="@+id/radioButton1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#FFFFFF"
+                android:textSize="20sp"
                 android:text="Playful" />
 
             <RadioButton
@@ -71,6 +77,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#FFFFFF"
+                android:textSize="20sp"
                 android:text="Normal" />
 
             <RadioButton
@@ -78,38 +85,65 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#FFFFFF"
+                android:textSize="20sp"
                 android:text="Epic" />
+            
         </RadioGroup>
 
         <RadioGroup
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            android:orientation="vertical" >
+            android:orientation="vertical" 
+            android:id="@+id/rgPlayers">"
             
             <RadioButton
                 android:id="@+id/radioButton4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#FFFFFF"
-                android:text="This" />
+                android:textSize="20sp"
+                android:text="Easygoing" />
 
             <RadioButton
                 android:id="@+id/radioButton5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#FFFFFF"
-                android:text="is an" />
+                android:textSize="20sp"
+                android:text="Hardworking" />
 
             <RadioButton
                 android:id="@+id/radioButton6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#FFFFFF"
-                android:text="example" />
+                android:textSize="20sp"
+                android:text="Heroic" />
             
         </RadioGroup>
         
     </LinearLayout>
 
+   <TextView 
+        android:text="Character Name" 
+        android:id="@+id/tvChange"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:textColor="#FFFFFF"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"></TextView>
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="fill_parent"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:textSize="25sp"
+        android:layout_height="wrap_content"></EditText>
+    <Button
+        android:text="Submit Character Name"
+        android:id="@+id/bGenerate"
+        android:layout_width="fill_parent"
+        android:textSize="30sp"
+        android:layout_height="wrap_content" ></Button>
 </LinearLayout>

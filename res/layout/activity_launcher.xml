@@ -9,76 +9,35 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.ghosthunter.Launcher" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:gravity="center"
-        android:text="@string/line1"
-        android:textColor="#ffffff"
-        android:textSize="20sp"
-        android:textStyle="italic" 
-        android:shadowDx="-5"
-        android:shadowDy="5"
-        android:shadowRadius="2"/>
-
-    <ImageView
-        android:id="@+id/imagelogo"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textView1"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_marginBottom="44dp"
-        android:contentDescription="@string/description"
-        android:src="@drawable/titlefontnewer"
-        android:gravity="center" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textView1"
-        android:layout_alignLeft="@+id/textView1"
-        android:gravity="center"
-        android:text="@string/line2"
-        android:textColor="#ffffff"
-        android:textSize="20sp"
-        android:textStyle="italic" 
-        android:shadowColor="#000000"
-        android:shadowDx="-5"
-        android:shadowDy="5"
-        android:shadowRadius="2"/>
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
-        android:gravity="center"
-        android:text="@string/line3"
-        android:textColor="#ffffff"
-        android:textSize="20sp"
-        android:textStyle="italic" 
-        android:shadowDx="-5"
-        android:shadowDy="5"
-        android:shadowRadius="2"/>
-
      <TextView
-         android:id="@+id/textView4"
+         android:id="@+id/totalTextView"
          android:layout_width="fill_parent"
          android:layout_height="wrap_content"
-         android:layout_alignLeft="@+id/textView3"
-         android:layout_below="@+id/textView3"
+         android:layout_alignLeft="@+id/imagelogo"
+         android:layout_below="@+id/imagelogo"
+         android:layout_marginTop="35dp"
          android:gravity="center"
-         android:text="@string/line4"
-         android:textColor="#ffffff"
-         android:textSize="20sp"
-         android:textStyle="italic" 
-         android:shadowDx="-5"
-        android:shadowDy="5"
-        android:shadowRadius="2"/>
-    
+         android:maxLines="4"
+         android:shadowColor="#000000"
+         android:shadowDx="4"
+         android:shadowDy="4"
+         android:shadowRadius="5"
+         android:singleLine="false"
+         android:text="@string/titleText"
+         android:textColor="#FFFFFF"
+         android:textSize="25sp"
+         android:textStyle="bold" />
+
+     <ImageView
+         android:id="@+id/imagelogo"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentTop="true"
+         android:layout_centerHorizontal="true"
+         android:layout_marginTop="210dp"
+         android:contentDescription="@string/description"
+         android:gravity="center"
+         android:src="@drawable/titlefontnewer" />
+
+"
 </RelativeLayout>

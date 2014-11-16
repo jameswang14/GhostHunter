@@ -20,8 +20,11 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		logoMusic = MediaPlayer.create(MainActivity.this, R.raw.favoritesong);
+		logoMusic = MediaPlayer.create(MainActivity.this, R.raw.menumusic);
+		logoMusic.setLooping(true);
 		logoMusic.start();
+		
+		final MediaPlayer buttonSound = MediaPlayer.create(MainActivity.this, R.raw.button_click);
 		
 		//Setting up Menu Button References
 		Button gameStart = (Button) findViewById(R.id.startGameButton);
@@ -31,6 +34,7 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				buttonSound.start();
 				Intent gameIntent = new Intent(MainActivity.this, GamePage.class);
 				startActivity(gameIntent);
 			}
@@ -42,6 +46,7 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				buttonSound.start();
 				Intent settingsIntent = new Intent(MainActivity.this, Settings.class);
 				startActivity(settingsIntent);
 			}
@@ -54,6 +59,7 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
+		super.onCreateOptionsMenu(menu);
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
@@ -75,5 +81,6 @@ public class MainActivity extends Activity {
 		super.onPause();
 		logoMusic.release();
 	}
+	
 	
 }

@@ -14,5 +14,6 @@
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_game_page">GamePage</string>
     <string name="description">Description</string>
+    <string name="titleText">Matthew Ledwith, Ryan Aubrey,\nJames Wang, Andrew Coffee\nUniversity of Virginia\nCS2110 - Fall 2104</string>
 
 </resources>

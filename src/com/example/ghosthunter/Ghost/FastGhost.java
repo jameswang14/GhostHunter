@@ -5,21 +5,21 @@ import com.example.ghosthunter.Character.Character;
 import com.example.ghosthunter.GridMap.GridMap;
 
 
-/* The standard ghost right here.
- * It chases after you and tries to eat you.
- * Easy to kill, easy to avoid.
- * Damage: 10. Speed: 3. Armor: 0. HP: 15. Ignores walls.
+/* The standard Fast Ghost
+ * Like a Basic Ghost, only faster.
+ * Easy to kill, harder to avoid.
+ * Damage: 10. Speed: 1. Armor: 0. HP: 5. Ignores walls.
  * 2 images, 1x1
  * [Dead,Alive]
  */
 
 //Sample instantiation
-//BasicGhost JohnMadden = new BasicGhost(pos, images, grid);
+//FastGhost JohnMadden = new FastGhost(pos, images, grid);
 
-public class BasicGhost extends Ghost {
+public class FastGhost extends Ghost {
 	
-	public BasicGhost(int[] pos, BitmapDrawable[] images, GridMap grid){
-		super(pos, new int[]{1,1}, 15, images, true, 10, 3, 0, grid);
+	public FastGhost(int[] pos, BitmapDrawable[] images, GridMap grid){
+		super(pos, new int[]{1,1}, 5, images, true, 10, 1, 0, grid);
 	}
 	
 	//0-E,1-N,2-W,3-S

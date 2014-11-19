@@ -1,6 +1,8 @@
 package com.example.ghosthunter.Ghost;
 
 import com.example.ghosthunter.Character.Character;
+import com.example.ghosthunter.GridMap.GridMap;
+
 import android.graphics.drawable.BitmapDrawable;
 
 public abstract class Ghost extends Character {
@@ -9,8 +11,8 @@ public abstract class Ghost extends Character {
 	private int damage;
 	private int speed; //capped at 10
 	
-	public Ghost(int[] pos, int[] len, int hp, BitmapDrawable[] images, boolean ignoresWalls, int damage, int speed, int armor){
-		super(hp,images,armor);
+	public Ghost(int[] pos, int[] len, int hp, BitmapDrawable[] images, boolean ignoresWalls, int damage, int speed, int armor, GridMap grid){
+		super(hp,images,armor,grid);
 		super.setPos(pos);
 		super.setLen(len);
 		this.ignoresWalls=ignoresWalls;
@@ -28,7 +30,13 @@ public abstract class Ghost extends Character {
 	
 	//this will be for the pathfinding
 	public abstract int getNextDirection(Character target); //offers the possibility of ghost-ghost anger
-	public abstract int damage(Character target);
+	
+	public int damage(Character target){ //to be overriden as necessary
+		int deal = target.getArmor()-this.damage;
+		if(deal<0) deal=1;
+		target.takeDamage(deal);
+		return deal; //in case we want to display the damage for whatever reason
+	}
 
 	public int getSpeed(){
 		return this.speed;

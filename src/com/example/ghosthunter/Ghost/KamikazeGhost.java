@@ -5,21 +5,21 @@ import com.example.ghosthunter.Character.Character;
 import com.example.ghosthunter.GridMap.GridMap;
 
 
-/* The standard ghost right here.
- * It chases after you and tries to eat you.
- * Easy to kill, easy to avoid.
- * Damage: 10. Speed: 3. Armor: 0. HP: 15. Ignores walls.
+/* The KamikazeGhost
+ * One hit wonder.
+ * Easy to kill, hard to avoid.
+ * Damage: 50. Speed: 1. Armor: 0. HP: 5. Ignores walls.
  * 2 images, 1x1
  * [Dead,Alive]
  */
 
 //Sample instantiation
-//BasicGhost JohnMadden = new BasicGhost(pos, images, grid);
+//KamikazeGhost JohnMadden = new KamikazeGhost(pos, images, grid);
 
-public class BasicGhost extends Ghost {
+public class KamikazeGhost extends Ghost {
 	
-	public BasicGhost(int[] pos, BitmapDrawable[] images, GridMap grid){
-		super(pos, new int[]{1,1}, 15, images, true, 10, 3, 0, grid);
+	public KamikazeGhost(int[] pos, BitmapDrawable[] images, GridMap grid){
+		super(pos, new int[]{2,2}, 5, images, true, 50, 1, 0, grid);
 	}
 	
 	//0-E,1-N,2-W,3-S
@@ -35,5 +35,14 @@ public class BasicGhost extends Ghost {
 	public BitmapDrawable draw(){ //currently does NOT use status effects
 		if(super.getDead()) return super.getImages()[0]; 	//rekt
 		else return super.getImages()[1];					//not rekt
+	}
+	
+	@Override
+	public int damage(Character target){ //overriden as necessary
+		int deal = target.getArmor()-super.getDamage();
+		if(deal<0) deal=1;
+		target.takeDamage(deal);
+		damage(this); //where the ghost kills itself
+		return deal; //in case we want to display the damage for whatever reason
 	}
 }

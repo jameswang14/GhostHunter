@@ -5,21 +5,21 @@ import com.example.ghosthunter.Character.Character;
 import com.example.ghosthunter.GridMap.GridMap;
 
 
-/* The standard ghost right here.
- * It chases after you and tries to eat you.
- * Easy to kill, easy to avoid.
- * Damage: 10. Speed: 3. Armor: 0. HP: 15. Ignores walls.
- * 2 images, 1x1
+/* The standard TankGhost
+ * Big, slow, powerful, armored.
+ * Hard to kill, easy to avoid.
+ * Damage: 25. Speed: 6. Armor: 10. HP: 100. Ignores walls.
+ * 2 images, 2x2
  * [Dead,Alive]
  */
 
 //Sample instantiation
-//BasicGhost JohnMadden = new BasicGhost(pos, images, grid);
+//TankGhost JohnMadden = new TankGhost(pos, images, grid);
 
-public class BasicGhost extends Ghost {
+public class TankGhost extends Ghost {
 	
-	public BasicGhost(int[] pos, BitmapDrawable[] images, GridMap grid){
-		super(pos, new int[]{1,1}, 15, images, true, 10, 3, 0, grid);
+	public TankGhost(int[] pos, BitmapDrawable[] images, GridMap grid){
+		super(pos, new int[]{2,2}, 100, images, true, 25, 6, 10, grid);
 	}
 	
 	//0-E,1-N,2-W,3-S

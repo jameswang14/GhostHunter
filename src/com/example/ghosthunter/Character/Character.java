@@ -2,6 +2,8 @@ package com.example.ghosthunter.Character;
 
 import com.example.ghosthunter.GridMap.GridMap;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 
@@ -15,22 +17,24 @@ public abstract class Character {
 	int lenX,lenY;
 	int hp;
 	boolean isDead;
-	BitmapDrawable[] images;
+	Bitmap[] images;
 	int status; //different from isDead
 	int statusRemaining; //added to allow for timed effects
 	int armor; //added for damage purposes
+	Context c;
 	
-	public Character(int hp, BitmapDrawable[] images, int armor, GridMap grid){
+	public Character(int hp, Bitmap[] images, int armor, GridMap grid, Context context){
 		this.status = 0;
 		this.hp = hp;
 		this.images=images;
 		this.armor=armor;
-		grid.addCharacter(this);
+		//grid.addCharacter(this);
+		c =context;
 	}
 	
 	//I added the direction
 	public abstract void move(int direction); //exactly what it says on the tin
-	public abstract BitmapDrawable draw(); //will return the correct image from the array
+	public abstract Bitmap draw(); //will return the correct image from the array
 	
 	//Same thing as with Environment
 	//Getters
@@ -56,7 +60,7 @@ public abstract class Character {
 		return this.isDead;
 	}
 	
-	public BitmapDrawable[] getImages(){
+	public Bitmap[] getImages(){
 		return this.images;
 	}
 	

@@ -3,6 +3,8 @@ package com.example.ghosthunter.Ghost;
 import com.example.ghosthunter.Character.Character;
 import com.example.ghosthunter.GridMap.GridMap;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 
 public abstract class Ghost extends Character {
@@ -11,8 +13,8 @@ public abstract class Ghost extends Character {
 	private int damage;
 	private int speed; //capped at 10
 	
-	public Ghost(int[] pos, int[] len, int hp, BitmapDrawable[] images, boolean ignoresWalls, int damage, int speed, int armor, GridMap grid){
-		super(hp,images,armor,grid);
+	public Ghost(int[] pos, int[] len, int hp, Bitmap[] images, boolean ignoresWalls, int damage, int speed, int armor, GridMap grid, Context context){
+		super(hp,images,armor,grid, context);
 		super.setPos(pos);
 		super.setLen(len);
 		this.ignoresWalls=ignoresWalls;

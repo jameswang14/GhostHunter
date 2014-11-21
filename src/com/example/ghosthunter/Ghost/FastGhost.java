@@ -1,5 +1,7 @@
 package com.example.ghosthunter.Ghost;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import com.example.ghosthunter.Character.Character;
 import com.example.ghosthunter.GridMap.GridMap;
@@ -18,8 +20,8 @@ import com.example.ghosthunter.GridMap.GridMap;
 
 public class FastGhost extends Ghost {
 	
-	public FastGhost(int[] pos, BitmapDrawable[] images, GridMap grid){
-		super(pos, new int[]{1,1}, 5, images, true, 10, 1, 0, grid);
+	public FastGhost(int[] pos, Bitmap[] images, GridMap grid,Context c){
+		super(pos, new int[]{1,1}, 5, images, true, 10, 1, 0, grid,c);
 	}
 	
 	//0-E,1-N,2-W,3-S
@@ -32,7 +34,7 @@ public class FastGhost extends Ghost {
 			return 3;
 	}
 
-	public BitmapDrawable draw(){ //currently does NOT use status effects
+	public Bitmap draw(){ //currently does NOT use status effects
 		if(super.getDead()) return super.getImages()[0]; 	//rekt
 		else return super.getImages()[1];					//not rekt
 	}

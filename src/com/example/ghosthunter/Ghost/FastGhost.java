@@ -20,8 +20,8 @@ import com.example.ghosthunter.GridMap.GridMap;
 
 public class FastGhost extends Ghost {
 	
-	public FastGhost(int[] pos, Bitmap[] images, GridMap grid,Context c){
-		super(pos, new int[]{1,1}, 5, images, true, 10, 1, 0, grid,c);
+	public FastGhost(int[] pos,  GridMap grid,Context c){
+		super(pos, new int[]{1,1}, 5, true, 10, 1, 0, grid,c);
 	}
 	
 	//0-E,1-N,2-W,3-S

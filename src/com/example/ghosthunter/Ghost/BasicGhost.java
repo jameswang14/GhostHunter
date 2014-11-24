@@ -23,10 +23,14 @@ import com.example.ghosthunter.GridMap.GridMap;
 
 public class BasicGhost extends Ghost {
 	
-	public BasicGhost(int[] pos, Bitmap[] images, GridMap grid,Context c){
+	public BasicGhost(int[] pos, GridMap grid,Context c){
 		//int[] pos, int[] len, int hp, BitmapDrawable[] images, boolean ignoresWalls, int damage, int speed, int armor, GridMap grid
-		super(pos, new int[]{1,1}, 15, images, true, 10, 3, 0, grid,c);
-
+		super(pos, new int[]{1,1}, 15, true, 10, 3, 0, grid,c);
+		Bitmap b=BitmapFactory.decodeResource(c.getResources(), R.drawable.ghosticon);
+		Bitmap[] images = new Bitmap[5];
+		images[0] = b;
+		images[1] = b;
+		this.setImages(images);
 	}
 	
 	//0-E,1-N,2-W,3-S

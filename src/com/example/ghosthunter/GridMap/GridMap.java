@@ -18,6 +18,8 @@ public class GridMap {
 	public GridMap(int x, int y, int seed){
 		this.lenX=x;
 		this.lenY=y;
+		chars = new ArrayList<Character>();
+		envis = new ArrayList<Environment>(); 
 	}
 	
 	public void addCharacter(Character character){

@@ -13,13 +13,14 @@ public abstract class Ghost extends Character {
 	private int damage;
 	private int speed; //capped at 10
 	
-	public Ghost(int[] pos, int[] len, int hp, Bitmap[] images, boolean ignoresWalls, int damage, int speed, int armor, GridMap grid, Context context){
-		super(hp,images,armor,grid, context);
+	public Ghost(int[] pos, int[] len, int hp, boolean ignoresWalls, int damage, int speed, int armor, GridMap grid, Context context){
+		super(hp,armor,grid, context);
 		super.setPos(pos);
 		super.setLen(len);
 		this.ignoresWalls=ignoresWalls;
 		this.damage=damage;
 		this.speed=speed;
+		grid.addCharacter(this);
 	}
 	
 	public void move(int direction){

@@ -20,8 +20,8 @@ import com.example.ghosthunter.GridMap.GridMap;
 
 public class KamikazeGhost extends Ghost {
 	
-	public KamikazeGhost(int[] pos, Bitmap[] images, GridMap grid, Context c){
-		super(pos, new int[]{2,2}, 5, images, true, 50, 1, 0, grid, c);
+	public KamikazeGhost(int[] pos, GridMap grid, Context c){
+		super(pos, new int[]{2,2}, 5, true, 50, 1, 0, grid, c);
 	}
 	
 	//0-E,1-N,2-W,3-S

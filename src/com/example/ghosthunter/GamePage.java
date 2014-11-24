@@ -47,9 +47,9 @@ public class GamePage extends Activity {
 		location[1] = 100;
 		//int[] pos, int[] len, int hp, BitmapDrawable[] images, boolean ignoresWalls, int damage, int speed, int armor, GridMap grid
 		GridMap grid = new GridMap(0,0,0);
-		ghost = new BasicGhost(a,images,grid,this);
-		ghost1 = new BasicGhost(location,images,grid,this);
-		//grid.addCharacter(ghost);
+		ghost = new BasicGhost(a,grid,this);
+		ghost1 = new BasicGhost(location,grid,this);
+
 		
 
 	}

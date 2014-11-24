@@ -21,7 +21,7 @@ import com.example.ghosthunter.GridMap.GridMap;
 public class TankGhost extends Ghost {
 	
 	public TankGhost(int[] pos, Bitmap[] images, GridMap grid, Context c){
-		super(pos, new int[]{2,2}, 100, images, true, 25, 6, 10, grid,c);
+		super(pos, new int[]{2,2}, 100,  true, 25, 6, 10, grid,c);
 	}
 	
 	//0-E,1-N,2-W,3-S

@@ -23,10 +23,9 @@ public abstract class Character {
 	int armor; //added for damage purposes
 	Context c;
 	
-	public Character(int hp, Bitmap[] images, int armor, GridMap grid, Context context){
+	public Character(int hp, int armor, GridMap grid, Context context){
 		this.status = 0;
 		this.hp = hp;
-		this.images=images;
 		this.armor=armor;
 		//grid.addCharacter(this);
 		c =context;
@@ -71,7 +70,10 @@ public abstract class Character {
 	public Rect getRect(){
 		return new Rect(this.posX,this.posY+this.lenY,this.posX+this.lenX,this.lenY);
 	}
-	
+	public void setImages(Bitmap[] images)
+	{
+		this.images = images;
+	}
 	//Setters
 	public boolean setStatus(int status){
 		if(status<this.images.length) this.status = status; //check to make sure we have a valid status

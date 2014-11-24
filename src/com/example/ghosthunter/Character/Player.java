@@ -10,8 +10,8 @@ public class Player extends Character{
 
 
 
-	public Player(int hp, Bitmap[] images, int armor, GridMap grid,Context context) {
-		super(hp, images, armor, grid, context);
+	public Player(int hp, int armor, GridMap grid,Context context) {
+		super(hp, armor, grid, context);
 		
 	}
 

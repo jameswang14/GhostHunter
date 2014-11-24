@@ -64,20 +64,15 @@ public class GamePage extends Activity {
 		location[1] = 100;
 		//int[] pos, int[] len, int hp, BitmapDrawable[] images, boolean ignoresWalls, int damage, int speed, int armor, GridMap grid
 		GridMap grid = new GridMap(0,0,0);
-<<<<<<< HEAD
+
 		ghost = new BasicGhost(a,grid,this);
 		ghost1 = new BasicGhost(location,grid,this);
 
-=======
-		ghost = new BasicGhost(a,images,grid,this);
-		ghost1 = new BasicGhost(location,images,grid,this);
-		
+
 		//int hp, Bitmap[] images, int armor, GridMap grid,Context context
-		p = new Player(50, images2, 10, grid, this);
+		p = new Player(50, 10, grid, this);
 		p.setPos(a2);
-		//grid.addCharacter(ghost);
->>>>>>> 77c6d3d3019e0cc72b8f78efbd3e9fd0967d1f40
-		
+
 
 	}
 	protected void onResume(){

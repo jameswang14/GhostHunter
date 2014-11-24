@@ -1,7 +1,10 @@
 package com.example.ghosthunter;
 
+import java.util.ArrayList;
+
 import com.example.ghosthunter.Character.Player;
 import com.example.ghosthunter.Ghost.BasicGhost;
+import com.example.ghosthunter.Ghost.Ghost;
 import com.example.ghosthunter.GridMap.GridMap;
 
 import android.app.Activity;
@@ -33,10 +36,9 @@ public class GamePage extends Activity {
 	BasicGhost ghost;
 	BasicGhost ghost1;
 	Player p;
-	boolean running = false;
 	int[] a;
 	int[] a2;
-	
+	GridMap grid = new GridMap(0,0,0);
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
@@ -63,7 +65,7 @@ public class GamePage extends Activity {
 		location[0] = 100;
 		location[1] = 100;
 		//int[] pos, int[] len, int hp, BitmapDrawable[] images, boolean ignoresWalls, int damage, int speed, int armor, GridMap grid
-		GridMap grid = new GridMap(0,0,0);
+
 
 		ghost = new BasicGhost(a,grid,this);
 		ghost1 = new BasicGhost(location,grid,this);
@@ -80,7 +82,7 @@ public class GamePage extends Activity {
 		d.resume();
 	}
 	protected void onDestroy(){
-		running = false;
+		d.pause();
 	}
 	
 	
@@ -120,10 +122,21 @@ public class GamePage extends Activity {
 			Paint paint2 = new Paint(Paint.ANTI_ALIAS_FLAG);
 			paint2.setColor(Color.GREEN);
 			canvas.drawARGB(255, 0, 0, 0);
-			xcor++;
-			ycor++;
-			canvas.drawBitmap(ghost.draw(), xcor,ycor, paint);
-			canvas.drawBitmap(p.draw(), playerX,playerY , paint2);
+			ArrayList<com.example.ghosthunter.Character.Character> toDraw = grid.getCharList(0, 0, canvas.getWidth(), canvas.getHeight());
+			for(int a = 0; a < toDraw.size(); a++)
+			{
+				com.example.ghosthunter.Character.Character temp = toDraw.get(a);
+				canvas.drawBitmap(temp.draw(),temp.getPos()[0], temp.getPos()[1], paint);
+				if(temp instanceof Ghost)
+					temp.move(0); //replace with actual direction later
+					
+				
+			}
+			/**ghost.move(1);
+			ghost1.move(1);
+			canvas.drawBitmap(ghost.draw(), ghost.getPos()[0],ghost.getPos()[1], paint);
+			canvas.drawBitmap(ghost1.draw(), ghost1.getPos()[0],ghost1.getPos()[1], paint);*/
+			//canvas.drawBitmap(p.draw(), playerX,playerY , paint2);
 		
 
 		}

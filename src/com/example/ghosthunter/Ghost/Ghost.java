@@ -5,6 +5,8 @@ import com.example.ghosthunter.GridMap.GridMap;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 
 public abstract class Ghost extends Character {
@@ -55,5 +57,14 @@ public abstract class Ghost extends Character {
 	
 	public void setDamage(int damage){
 		this.damage=damage;
+	}
+	public Bitmap draw(){ //currently does NOT use status effects
+		if(super.getDead()) return super.getImages()[0]; 	//rekt
+		else return super.getImages()[1];					//not rekt
+	}
+	public void update(Canvas c)
+	{
+		move(0); //replace with direction calculation
+		c.drawBitmap(draw(), getPos()[0],getPos()[1],new Paint(Paint.ANTI_ALIAS_FLAG));
 	}
 }

@@ -105,4 +105,5 @@ public abstract class Character {
 		if(statusRemaining>0 && status!=0) statusRemaining--;
 		if(statusRemaining==0) status=0;
 	}
+	
 }

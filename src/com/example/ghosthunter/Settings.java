@@ -1,6 +1,7 @@
 package com.example.ghosthunter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -25,6 +26,8 @@ public class Settings extends Activity implements OnCheckedChangeListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
+		final MediaPlayer buttonSound = MediaPlayer.create(Settings.this, R.raw.button_click);
+		
 		
 		textIn = (EditText) findViewById(R.id.editText1);
 		textOut = (TextView) findViewById(R.id.tvChange);
@@ -32,7 +35,9 @@ public class Settings extends Activity implements OnCheckedChangeListener{
 		difficultyG.setOnCheckedChangeListener(this);
 		RadioGroup playersG = (RadioGroup) findViewById(R.id.rgPlayers);
 		playersG.setOnCheckedChangeListener(this);
+		
 		Button gen = (Button) findViewById(R.id.bGenerate);
+		Button back = (Button) findViewById(R.id.bBack);
 		
 		gen.setOnClickListener(new View.OnClickListener() {
 			
@@ -42,6 +47,17 @@ public class Settings extends Activity implements OnCheckedChangeListener{
 				textOut.setText(textIn.getText());
 			}
 		});		
+		
+		back.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				buttonSound.start();
+				Intent settingsIntent = new Intent(Settings.this, MainActivity.class);
+				startActivity(settingsIntent);
+			}
+			
+		});
 		logoMusic = MediaPlayer.create(Settings.this, R.raw.menumusic);
 		logoMusic.setLooping(true);
 		logoMusic.start();

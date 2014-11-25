@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.TextView;
 
 public class GamePage extends Activity {
 	
@@ -30,6 +31,7 @@ public class GamePage extends Activity {
 	int ycor = 0;
 	int playerX = 250;
 	int playerY = 250;
+	int scoreCounter = 0;
 	
 	Bitmap b;
 	Bitmap b2;
@@ -92,8 +94,7 @@ public class GamePage extends Activity {
 		private SurfaceHolder sh;
 		Canvas canvas;
 		boolean running = false;
-		public DrawingPanel(Context context)
-		{
+		public DrawingPanel(Context context) {
 			super(context);
 			sh = getHolder();
 			paint.setColor(Color.BLUE);
@@ -117,10 +118,16 @@ public class GamePage extends Activity {
 			
 			
 		}
-		public void onDraw(Canvas canvas)
-		{
+		public void onDraw(Canvas canvas) {
+	
 			Paint paint2 = new Paint(Paint.ANTI_ALIAS_FLAG);
 			paint2.setColor(Color.GREEN);
+			
+			scoreCounter += 1;
+			TextView score = new TextView(d.getContext());
+			//score = (TextView) findViewById(R.id.ScoreView);
+			score.setText("Score: " + Integer.toString(scoreCounter));
+			
 			canvas.drawARGB(255, 0, 0, 0);
 			ArrayList<com.example.ghosthunter.Character.Character> toDraw = grid.getCharList(0, 0, canvas.getWidth(), canvas.getHeight());
 			for(int a = 0; a < toDraw.size(); a++)

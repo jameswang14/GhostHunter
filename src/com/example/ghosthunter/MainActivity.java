@@ -20,7 +20,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		logoMusic = MediaPlayer.create(MainActivity.this, R.raw.menumusic);
+		logoMusic = MediaPlayer.create(MainActivity.this, R.raw.music);
 		logoMusic.setLooping(true);
 		logoMusic.start();
 		

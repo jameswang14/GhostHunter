@@ -35,8 +35,8 @@ public class Player extends Character implements OnTouchListener{
 	public void move(int x, int y) {
 		//Log.e("tag", "in move");
 		int[] nazi = super.getPos();
-		nazi[0]++; //this should work, but might cause problems
-		nazi[1]++;
+		nazi[0]=nazi[0]+x; //this should work, but might cause problems
+		nazi[1]=nazi[1]+y;
 		super.setPos(nazi);
 	}
 

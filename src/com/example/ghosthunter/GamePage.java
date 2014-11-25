@@ -19,8 +19,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class GamePage extends Activity {
@@ -45,24 +53,117 @@ public class GamePage extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
-		d = new DrawingPanel(this);
-		setContentView(d);
-		b2 = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
-		b=BitmapFactory.decodeResource(getResources(), R.drawable.ghosticon);
+		
+
+		  d = new DrawingPanel(this);
+		  FrameLayout game = new FrameLayout(this);
+	        RelativeLayout gameWidgets = new RelativeLayout (this);
+
+	        Button leftButton = new Button(this);
+			Button upButton = new Button(this);
+			Button rightButton = new Button(this);
+			Button downButton = new Button(this);
+			scoreCounter += 1;
+			TextView score = new TextView(d.getContext());
+			//score = (TextView) findViewById(R.id.ScoreView);
+			score.setText("Score: " + Integer.toString(scoreCounter));
+			
+
+	        leftButton.setWidth(100);
+	        leftButton.setHeight(50);
+	        leftButton.setY(900);
+	        leftButton.setX(50);
+	        
+	        upButton.setMinimumWidth(0);
+	        upButton.setWidth(50);
+	        upButton.setHeight(100);
+	        upButton.setY(800);
+	        upButton.setX(150);
+	      
+	        rightButton.setWidth(100);
+	        rightButton.setHeight(50);
+	        rightButton.setY(900);
+	        rightButton.setX(200);
+	        
+	        downButton.setMinimumWidth(0);
+	        downButton.setWidth(50);
+	        downButton.setHeight(100);
+	        downButton.setY(950);
+	        downButton.setX(150);
+	        
+	        gameWidgets.addView(upButton);
+	        gameWidgets.addView(leftButton);   
+	        gameWidgets.addView(rightButton);
+	        gameWidgets.addView(downButton);
+	        game.addView(d);
+	        gameWidgets.addView(score);
+
+	        game.addView(gameWidgets);
+
+	        setContentView(game);
+
+	        leftButton.setOnTouchListener(new OnTouchListener() {
+	            public boolean onTouch(View v, MotionEvent event) {
+	                switch(event.getAction()) {
+	                case MotionEvent.ACTION_DOWN:
+	                	p.move(-5, 0);
+	                    return true;
+	                case MotionEvent.ACTION_UP:
+	                    // No longer down
+	                    return true;
+	                }
+	                return false;
+	            }
+	        });
+	        
+	        upButton.setOnTouchListener(new OnTouchListener() {
+	            public boolean onTouch(View v, MotionEvent event) {
+	                switch(event.getAction()) {
+	                case MotionEvent.ACTION_DOWN:
+	                	p.move(0, -5);
+	                    return true;
+	                case MotionEvent.ACTION_UP:
+	                    // No longer down
+	                    return true;
+	                }
+	                return false;
+	            }
+	        });
+				
+	        
+	        rightButton.setOnTouchListener(new OnTouchListener() {
+	            public boolean onTouch(View v, MotionEvent event) {
+	                switch(event.getAction()) {
+	                case MotionEvent.ACTION_DOWN:
+	                	p.move(5, 0);
+	                    return true;
+	                case MotionEvent.ACTION_UP:
+	                    // No longer down
+	                    return true;
+	                }
+	                return false;
+	            }
+	        });
+
+	        downButton.setOnTouchListener(new OnTouchListener() {
+	            public boolean onTouch(View v, MotionEvent event) {
+	                switch(event.getAction()) {
+	                case MotionEvent.ACTION_DOWN:
+	                	p.move(0, 5);
+	                    return true;
+	                case MotionEvent.ACTION_UP:
+	                    // No longer down
+	                    return true;
+	                }
+	                return false;
+	            }
+	        });
+		
+	        
 		a = new int[2];
 		a2 = new int[2];
 		a2[0] = 100;
 		a2[1] = 200;
-		
-		a[0]=0;
-		a[1]=0;
-		Bitmap[] images = new Bitmap[2];
-		Bitmap[] images2 = new Bitmap[2];
-		images2[0] = b2;
-		images2[1] = b2;
-		
-		images[1] = b;
-		images[0] = b;
 		int[] location = new int[2];
 		location[0] = 200;
 		location[1] = 200;
@@ -71,7 +172,6 @@ public class GamePage extends Activity {
 
 		ghost = new BasicGhost(a,grid,this);
 		ghost1 = new BasicGhost(location,grid,this);
-
 
 		//int hp, Bitmap[] images, int armor, GridMap grid,Context context
 		p = new Player(50, 10, grid, this);
@@ -122,12 +222,7 @@ public class GamePage extends Activity {
 	
 			Paint paint2 = new Paint(Paint.ANTI_ALIAS_FLAG);
 			paint2.setColor(Color.GREEN);
-			
-			scoreCounter += 1;
-			TextView score = new TextView(d.getContext());
-			//score = (TextView) findViewById(R.id.ScoreView);
-			score.setText("Score: " + Integer.toString(scoreCounter));
-			
+
 			canvas.drawARGB(255, 0, 0, 0);
 			ArrayList<com.example.ghosthunter.Character.Character> toDraw = grid.getCharList(0, 0, canvas.getWidth(), canvas.getHeight());
 			for(int a = 0; a < toDraw.size(); a++)
@@ -140,7 +235,7 @@ public class GamePage extends Activity {
 					temp.move(0,0); //replace with actual direction later
 				if(temp instanceof Player){
 					//Log.e("tag", "in instanceof");
-					temp.move(1, 1);
+					//temp.move(1, 1);
 				}
 				
 			}

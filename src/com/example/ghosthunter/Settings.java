@@ -58,7 +58,7 @@ public class Settings extends Activity implements OnCheckedChangeListener{
 			}
 			
 		});
-		logoMusic = MediaPlayer.create(Settings.this, R.raw.menumusic);
+		logoMusic = MediaPlayer.create(Settings.this, R.raw.music);
 		logoMusic.setLooping(true);
 		logoMusic.start();
 	}

@@ -134,7 +134,8 @@ public class GamePage extends Activity {
 			{
 				
 				com.example.ghosthunter.Character.Character temp = toDraw.get(a);
-				canvas.drawBitmap(temp.draw(),temp.getPos()[0], temp.getPos()[1], paint);
+				toDraw.get(a).update(canvas);
+				//canvas.drawBitmap(temp.draw(),temp.getPos()[0], temp.getPos()[1], paint);
 				if(temp instanceof Ghost)
 					temp.move(0,0); //replace with actual direction later
 				if(temp instanceof Player){

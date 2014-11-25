@@ -4,6 +4,7 @@ import com.example.ghosthunter.GridMap.GridMap;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 
@@ -34,7 +35,7 @@ public abstract class Character {
 	//I added the direction
 	public abstract void move(int x, int y); //exactly what it says on the tin
 	public abstract Bitmap draw(); //will return the correct image from the array
-	
+	public abstract void update(Canvas c);
 	//Same thing as with Environment
 	//Getters
 	public int getStatus(){

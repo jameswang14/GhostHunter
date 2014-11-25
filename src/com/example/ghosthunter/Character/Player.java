@@ -34,10 +34,10 @@ public class Player extends Character implements OnTouchListener{
 	@Override
 	public void move(int x, int y) {
 		//Log.e("tag", "in move");
-		this.getPos()[0] = this.getPos()[0] + x;
-		this.getPos()[1] = this.getPos()[1] + x;
-		
-		
+		int[] nazi = super.getPos();
+		nazi[0]++; //this should work, but might cause problems
+		nazi[1]++;
+		super.setPos(nazi);
 	}
 
 	@Override

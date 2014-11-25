@@ -62,8 +62,8 @@ public class GamePage extends Activity {
 		images[1] = b;
 		images[0] = b;
 		int[] location = new int[2];
-		location[0] = 100;
-		location[1] = 100;
+		location[0] = 200;
+		location[1] = 200;
 		//int[] pos, int[] len, int hp, BitmapDrawable[] images, boolean ignoresWalls, int damage, int speed, int armor, GridMap grid
 
 
@@ -125,11 +125,15 @@ public class GamePage extends Activity {
 			ArrayList<com.example.ghosthunter.Character.Character> toDraw = grid.getCharList(0, 0, canvas.getWidth(), canvas.getHeight());
 			for(int a = 0; a < toDraw.size(); a++)
 			{
+				
 				com.example.ghosthunter.Character.Character temp = toDraw.get(a);
 				canvas.drawBitmap(temp.draw(),temp.getPos()[0], temp.getPos()[1], paint);
 				if(temp instanceof Ghost)
-					temp.move(0); //replace with actual direction later
-					
+					temp.move(0,0); //replace with actual direction later
+				if(temp instanceof Player){
+					//Log.e("tag", "in instanceof");
+					temp.move(1, 1);
+				}
 				
 			}
 			/**ghost.move(1);

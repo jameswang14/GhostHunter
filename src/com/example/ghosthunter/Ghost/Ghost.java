@@ -25,7 +25,7 @@ public abstract class Ghost extends Character {
 		grid.addCharacter(this);
 	}
 	
-	public void move(int direction){
+	public void move(int x, int y){
 		//I assume that the thread has already checked that the ghost can move in the given direction
 		int[] nazi = super.getPos();
 		nazi[0]++; //this should work, but might cause problems
@@ -64,7 +64,7 @@ public abstract class Ghost extends Character {
 	}
 	public void update(Canvas c)
 	{
-		move(0); //replace with direction calculation
+		 //replace with direction calculation
 		c.drawBitmap(draw(), getPos()[0],getPos()[1],new Paint(Paint.ANTI_ALIAS_FLAG));
 	}
 }

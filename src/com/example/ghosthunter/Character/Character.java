@@ -32,7 +32,7 @@ public abstract class Character {
 	}
 	
 	//I added the direction
-	public abstract void move(int direction); //exactly what it says on the tin
+	public abstract void move(int x, int y); //exactly what it says on the tin
 	public abstract Bitmap draw(); //will return the correct image from the array
 	
 	//Same thing as with Environment

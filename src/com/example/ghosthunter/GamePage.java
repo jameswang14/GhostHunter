@@ -71,24 +71,24 @@ public class GamePage extends Activity {
 
 	        leftButton.setWidth(100);
 	        leftButton.setHeight(50);
-	        leftButton.setY(900);
+	        leftButton.setY(500);
 	        leftButton.setX(50);
 	        
 	        upButton.setMinimumWidth(0);
 	        upButton.setWidth(50);
 	        upButton.setHeight(100);
-	        upButton.setY(800);
+	        upButton.setY(450);
 	        upButton.setX(150);
 	      
 	        rightButton.setWidth(100);
 	        rightButton.setHeight(50);
-	        rightButton.setY(900);
+	        rightButton.setY(500);
 	        rightButton.setX(200);
 	        
 	        downButton.setMinimumWidth(0);
 	        downButton.setWidth(50);
 	        downButton.setHeight(100);
-	        downButton.setY(950);
+	        downButton.setY(550);
 	        downButton.setX(150);
 	        
 	        gameWidgets.addView(upButton);
@@ -106,6 +106,11 @@ public class GamePage extends Activity {
 	            public boolean onTouch(View v, MotionEvent event) {
 	                switch(event.getAction()) {
 	                case MotionEvent.ACTION_DOWN:
+	                	p.setUp(false);
+	                	p.setDown(false);
+	                	
+	                	p.setLeft(true);
+	                	p.setRight(false);
 	                	p.move(-5, 0);
 	                    return true;
 	                case MotionEvent.ACTION_UP:
@@ -120,6 +125,12 @@ public class GamePage extends Activity {
 	            public boolean onTouch(View v, MotionEvent event) {
 	                switch(event.getAction()) {
 	                case MotionEvent.ACTION_DOWN:
+	                	p.setUp(true);
+	                	p.setDown(false);
+	                	
+	                	p.setLeft(false);
+	                	p.setRight(false);
+	                	
 	                	p.move(0, -5);
 	                    return true;
 	                case MotionEvent.ACTION_UP:
@@ -135,6 +146,11 @@ public class GamePage extends Activity {
 	            public boolean onTouch(View v, MotionEvent event) {
 	                switch(event.getAction()) {
 	                case MotionEvent.ACTION_DOWN:
+	                	p.setUp(false);
+	                	p.setDown(false);
+	                	
+	                	p.setLeft(false);
+	                	p.setRight(true);
 	                	p.move(5, 0);
 	                    return true;
 	                case MotionEvent.ACTION_UP:
@@ -149,6 +165,12 @@ public class GamePage extends Activity {
 	            public boolean onTouch(View v, MotionEvent event) {
 	                switch(event.getAction()) {
 	                case MotionEvent.ACTION_DOWN:
+	                	p.setUp(false);
+	                	p.setDown(true);
+	                	
+	                	p.setLeft(false);
+	                	p.setRight(false);
+	                	
 	                	p.move(0, 5);
 	                    return true;
 	                case MotionEvent.ACTION_UP:
@@ -232,7 +254,7 @@ public class GamePage extends Activity {
 				toDraw.get(a).update(canvas);
 				//canvas.drawBitmap(temp.draw(),temp.getPos()[0], temp.getPos()[1], paint);
 				if(temp instanceof Ghost)
-					temp.move(0,0); //replace with actual direction later
+					((Ghost)temp).move(1,1,p); //replace with actual direction later
 				if(temp instanceof Player){
 					//Log.e("tag", "in instanceof");
 					//temp.move(1, 1);

@@ -1,6 +1,7 @@
 package com.example.ghosthunter.Ghost;
 
 import com.example.ghosthunter.Character.Character;
+import com.example.ghosthunter.Character.Player;
 import com.example.ghosthunter.GridMap.GridMap;
 
 import android.content.Context;
@@ -14,6 +15,7 @@ public abstract class Ghost extends Character {
 	private boolean ignoresWalls; //for use by subclasses
 	private int damage;
 	private int speed; //capped at 10
+	private int velocityX = 1, velocityY = 1;
 	
 	public Ghost(int[] pos, int[] len, int hp, boolean ignoresWalls, int damage, int speed, int armor, GridMap grid, Context context){
 		super(hp,armor,grid, context);
@@ -25,14 +27,37 @@ public abstract class Ghost extends Character {
 		grid.addCharacter(this);
 	}
 	
-	public void move(int x, int y){
+	public void move(int x, int y, Player p){
 		//I assume that the thread has already checked that the ghost can move in the given direction
 		int[] nazi = super.getPos();
-		nazi[0]++; //this should work, but might cause problems
-		nazi[1]++;
+		if(nazi[0] > 400 || nazi[0] < 0)
+			this.setVelocityX(-velocityX);
+		
+		if(nazi[1] > 600 || nazi[1] < 0)
+			this.setVelocityY(-velocityY);
+		
+		nazi[0] = nazi[0] + this.velocityX; 
+		nazi[1] = nazi[1] + this.velocityY;
+		
 		super.setPos(nazi);
 	}
 	
+	public int getVelocityX() {
+		return velocityX;
+	}
+
+	public void setVelocityX(int velocityX) {
+		this.velocityX = velocityX;
+	}
+
+	public int getVelocityY() {
+		return velocityY;
+	}
+
+	public void setVelocityY(int velocityY) {
+		this.velocityY = velocityY;
+	}
+
 	//this will be for the pathfinding
 	public abstract int getNextDirection(Character target); //offers the possibility of ghost-ghost anger
 	

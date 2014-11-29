@@ -14,7 +14,7 @@ import android.view.View.OnTouchListener;
 import com.example.ghosthunter.R;
 import com.example.ghosthunter.GridMap.GridMap;
 
-public class Player extends Character implements OnTouchListener{
+public class Player extends Character{
 
 	int dx, dy;
 	int vectorX, vectorY;
@@ -26,7 +26,7 @@ public class Player extends Character implements OnTouchListener{
 		Bitmap b=BitmapFactory.decodeResource(c.getResources(), R.drawable.down1);
 		Bitmap b2=BitmapFactory.decodeResource(c.getResources(), R.drawable.up1);
 		Bitmap b3=BitmapFactory.decodeResource(c.getResources(), R.drawable.left1);
-		Bitmap b4 = BitmapFactory.decodeResource(c.getResources(), R.drawable.right1);
+		Bitmap b4=BitmapFactory.decodeResource(c.getResources(), R.drawable.right1);
 		
 		Bitmap[] images = new Bitmap[4];
 		images[0] = b;
@@ -103,43 +103,9 @@ public class Player extends Character implements OnTouchListener{
 	public void setDown(boolean down) {
 		this.down = down;
 	}
-
-
-	@Override
-	public boolean onTouch(View v, MotionEvent me) {
-		Log.e("tag", "In onTouch");
-		try {
-			Thread.sleep(50);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		switch(me.getAction()){
-		case MotionEvent.ACTION_DOWN:
-			this.move((int)me.getX(),(int) me.getY());
-//			dx = (int) (me.getX() - getPos()[0]);
-//			dy = (int) (me.getY() - getPos()[1]);
-//			vectorX = (int) (getPos()[0] / Math.sqrt((double)(dx^2 + dy^2)));
-//			vectorY = (int) (getPos()[1] / Math.sqrt((double)(dx^2 + dy^2)));//best i can do with integers right now
-//			this.move(vectorX, vectorY);
-			break;
-		
-		case MotionEvent.ACTION_MOVE:
-			this.move((int)me.getX(),(int) me.getY());
-//			dx = (int) (me.getX() - getPos()[0]);
-//			dy = (int) (me.getY() - getPos()[1]);
-//			vectorX = (int) (getPos()[0] / Math.sqrt((double)(dx^2 + dy^2)));
-//			vectorY = (int) (getPos()[1] / Math.sqrt((double)(dx^2 + dy^2)));//best i can do with integers right now
-//			this.move(vectorX, vectorY);
-			break;
-			
-		}
-		return true;
-	}
 	
 	public void update(Canvas c)
 	{
-		 //replace with direction calculation
 		c.drawBitmap(draw(), getPos()[0],getPos()[1],new Paint(Paint.ANTI_ALIAS_FLAG));
 	}
 	

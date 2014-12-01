@@ -11,18 +11,23 @@ import java.util.ArrayList;
 public class GridMap {
 	
 	int lenX, lenY;
-	int seed; //will be used for the eventual generation
+	int roomsize,roomcap;
 	ArrayList<Character> chars;
 	ArrayList<Bullet> bullets;
 	ArrayList<Environment> envis;
+	GridGenerator GG;
 	
 	
-	public GridMap(int x, int y, int seed){
+	public GridMap(int x, int y, int roomsize, int roomcap){
 		this.lenX=x;
 		this.lenY=y;
 		chars = new ArrayList<Character>();
 		envis = new ArrayList<Environment>(); 
 		bullets = new ArrayList<Bullet>();
+		
+		//WARNING: These next two functions take computational time
+		GG = new GridGenerator(roomsize, roomcap);
+		envis.addAll(GG.generateWalls(this));
 	}
 	
 	public void addCharacter(Character character){
@@ -108,4 +113,5 @@ public class GridMap {
 		}
 		return true;
 	}
+	
 }

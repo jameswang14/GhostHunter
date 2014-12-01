@@ -9,6 +9,10 @@ public class GridGenerator {
 	GridRoom[] rooms;
 	
 	//This is literally John Madden's marionette of a corpse twisted into code format.
+	//Handles the semi-random generation of the rooms
+	//The size argument handles the average size of the room as a square
+	//The roomcap is the total number of rooms.
+	
 	public GridGenerator(int roomsize, int roomcap) {
 		GridRoom temproom;
 		for(int i=0; i<roomcap; i++) {

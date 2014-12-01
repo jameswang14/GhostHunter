@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import android.graphics.Rect;
 
+//Rectangular rooms of variable size. Each has four hallways leading out
+// that may or may not actually connect to other rooms.
+//Requires that clears override walls.
 public class GridRoom {
 	
 	int lenX, lenY;
@@ -20,24 +23,39 @@ public class GridRoom {
 		return new Rect(this.posX,this.posY+this.lenY,this.posX+this.lenX,this.lenY);
 	}
 	
-	//What it says on the tin
+	//Generates the spaces in the rooms
+	//Also handles the construction of hallways
 	public ArrayList<int[]> getClear() {
 		ArrayList<int[]> clears = new ArrayList<int[]>();
+		
+		//main region
 		for(int i=0; i<this.lenX; i++) {
 			for(int j=0; j<this.lenY; j++) {
 				clears.add(new int[]{this.posX+i,this.posY+j});
 			}
 		}
+		//hallways
+		for(int i=0; i<this.lenX; i++) clears.add(new int[]{this.posX+i,this.posY+lenY/2});
+		for(int i=0; i<this.lenX; i++) clears.add(new int[]{this.posX-i,this.posY+lenY/2});
+		for(int i=0; i<this.lenY; i++) clears.add(new int[]{this.posX+lenX/2,this.posY+i});
+		for(int i=0; i<this.lenY; i++) clears.add(new int[]{this.posX+lenX/2,this.posY-i});
+		
 		return clears;
 	}
 	
-	//What it says on the tin
-	public ArrayList<int[]> getWall() {
+	//Coats the clears in a nice layer of walls
+	//Then makes room for the filling
+	public ArrayList<int[]> getWall(ArrayList<int[]> clears) {
 		ArrayList<int[]> walls = new ArrayList<int[]>();
-		for(int i=0; i<this.lenX; i++) walls.add(new int[]{this.posX+i,this.posY});
-		for(int i=0; i<this.lenX; i++) walls.add(new int[]{this.posX+i,this.posY+this.lenY});
-		for(int i=0; i<this.lenY; i++) walls.add(new int[]{this.posX,this.posY+i});
-		for(int i=0; i<this.lenY; i++) walls.add(new int[]{this.posX+this.lenX,this.posY+i});
+		
+		for(int[] curr : clears) {
+			for(int i=-1; i<2; i++) {
+				for(int j=-1; j<2; j++) {
+					walls.add(new int[]{curr[0]+i,curr[1]+j});
+				}
+			}
+		}
+		walls.remove(clears);
 		
 		return walls;
 	}

@@ -17,6 +17,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,6 +42,7 @@ public class GamePage extends Activity {
 	int playerX = 250;
 	int playerY = 250;
 	int scoreCounter = 0;
+	int mvspeed = 100; //decrease value to increase speed
 	
 	Bitmap b;
 	Bitmap b2;
@@ -51,13 +53,16 @@ public class GamePage extends Activity {
 	int[] a;
 	int[] a2;
 	GridMap grid = new GridMap(0,0,0);
-	
-	
+	Runnable moveLeft;
+	Runnable moveUp;
+	Runnable moveRight;
+	Runnable moveDown;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
-		
+		final Handler mHandler = new Handler(); 
+
 
 		    d = new DrawingPanel(this);
 		    FrameLayout game = new FrameLayout(this);
@@ -67,10 +72,7 @@ public class GamePage extends Activity {
 			Button upButton = new Button(this);
 			Button rightButton = new Button(this);
 			Button downButton = new Button(this);
-			Button leftButton2 = new Button(this);
-			Button upButton2 = new Button(this);
-			Button rightButton2 = new Button(this);
-			Button downButton2 = new Button(this);
+			
 			scoreCounter += 1;
 			TextView score = new TextView(d.getContext());
 			//score = (TextView) findViewById(R.id.ScoreView);
@@ -78,25 +80,27 @@ public class GamePage extends Activity {
 			
 
 	        leftButton.setWidth(100);
+	        leftButton.setMinimumHeight(0);
 	        leftButton.setHeight(50);
-	        leftButton.setY(500);
+	        leftButton.setY(800);
 	        leftButton.setX(50);
 	        
 	        upButton.setMinimumWidth(0);
 	        upButton.setWidth(50);
 	        upButton.setHeight(100);
-	        upButton.setY(450);
+	        upButton.setY(700);
 	        upButton.setX(150);
 	      
 	        rightButton.setWidth(100);
+	        rightButton.setMinimumHeight(0);
 	        rightButton.setHeight(50);
-	        rightButton.setY(500);
+	        rightButton.setY(800);
 	        rightButton.setX(200);
 	        
 	        downButton.setMinimumWidth(0);
 	        downButton.setWidth(50);
 	        downButton.setHeight(100);
-	        downButton.setY(550);
+	        downButton.setY(850);
 	        downButton.setX(150);
 	        
 	        gameWidgets.addView(upButton);
@@ -106,102 +110,23 @@ public class GamePage extends Activity {
 	        
 	        //---------------------------------------------------]
 	        
-	        leftButton2.setWidth(100);
-	        leftButton2.setHeight(50);
-	        leftButton2.setY(500);
-	        leftButton2.setX(250);
-	        
-	        upButton2.setMinimumWidth(0);
-	        upButton2.setWidth(50);
-	        upButton2.setHeight(100);
-	        upButton2.setY(450);
-	        upButton2.setX(350);
-	      
-	        rightButton2.setWidth(100);
-	        rightButton2.setHeight(50);
-	        rightButton2.setY(500);
-	        rightButton2.setX(400);
-	        
-	        downButton2.setMinimumWidth(0);
-	        downButton2.setWidth(50);
-	        downButton2.setHeight(100);
-	        downButton2.setY(550);
-	        downButton2.setX(350);
-	        
-	        gameWidgets.addView(upButton2);
-	        gameWidgets.addView(leftButton2);   
-	        gameWidgets.addView(rightButton2);
-	        gameWidgets.addView(downButton2);
+
 	        game.addView(d);
 	        gameWidgets.addView(score);
 
 	        game.addView(gameWidgets);
 
 	        setContentView(game);
-
+	        
+	        moveLeft = new Runnable() {
+	            @Override public void run(){
+	                mHandler.postDelayed(this, mvspeed);
+	                p.move(-5, 0);
+	            }
+	        };
+	        
+	        
 	        leftButton.setOnTouchListener(new OnTouchListener() {
-	            public boolean onTouch(View v, MotionEvent event) {
-	                switch(event.getAction()) {
-	                case MotionEvent.ACTION_DOWN:
-	                
-	                	p.move(-5, 0);
-	                    return true;
-	                case MotionEvent.ACTION_UP:
-	                    // No longer down
-	                    return true;
-	                }
-	                return false;
-	            }
-	        });
-	        
-	        upButton.setOnTouchListener(new OnTouchListener() {
-	            public boolean onTouch(View v, MotionEvent event) {
-	                switch(event.getAction()) {
-	                case MotionEvent.ACTION_DOWN:
-	                	
-	                	
-	                	p.move(0, -5);
-	                    return true;
-	                case MotionEvent.ACTION_UP:
-	                    // No longer down
-	                    return true;
-	                }
-	                return false;
-	            }
-	        });
-				
-	        
-	        rightButton.setOnTouchListener(new OnTouchListener() {
-	            public boolean onTouch(View v, MotionEvent event) {
-	                switch(event.getAction()) {
-	                case MotionEvent.ACTION_DOWN:
-	                	
-	                	p.move(5, 0);
-	                    return true;
-	                case MotionEvent.ACTION_UP:
-	                    // No longer down
-	                    return true;
-	                }
-	                return false;
-	            }
-	        });
-
-	        downButton.setOnTouchListener(new OnTouchListener() {
-	            public boolean onTouch(View v, MotionEvent event) {
-	                switch(event.getAction()) {
-	                case MotionEvent.ACTION_DOWN:
-	                	
-	                	p.move(0,5);
-	                    return true;
-	                case MotionEvent.ACTION_UP:
-	                    // No longer down
-	                    return true;
-	                }
-	                return false;
-	            }
-	        });
-		
-	        leftButton2.setOnTouchListener(new OnTouchListener() {
 	            public boolean onTouch(View v, MotionEvent event) {
 	                switch(event.getAction()) {
 	                case MotionEvent.ACTION_DOWN:
@@ -214,19 +139,32 @@ public class GamePage extends Activity {
 //	                	bullet.setY(p.getPos()[1]);
 //	                	
 //	                	bullet.move(-1, 0);
-	                    return true;
+	                	mHandler.postDelayed(moveLeft, 0);
+	                	//p.move(-5, 0);
+	                    return true; 
 	                case MotionEvent.ACTION_UP:
 	                    // No longer down
+	                	mHandler.removeCallbacks(moveLeft);
 	                    return true;
 	                }
 	                return false;
 	            }
 	        });
 	        
-	        upButton2.setOnTouchListener(new OnTouchListener() {
+	        moveUp = new Runnable() {
+	            @Override public void run() {
+	               
+	                mHandler.postDelayed(this, mvspeed);
+	                p.move(0, -5);
+	            }
+	        };
+	        
+	        
+	        upButton.setOnTouchListener(new OnTouchListener() {
 	            public boolean onTouch(View v, MotionEvent event) {
 	                switch(event.getAction()) {
 	                case MotionEvent.ACTION_DOWN:
+	                	
 	                	p.setUp(true);
 	                	p.setDown(false);
 	                	
@@ -236,17 +174,26 @@ public class GamePage extends Activity {
 //	                	bullet.setY(p.getPos()[1]);
 //	                	
 //	                	bullet.move(0, 1);
+	                	//p.move(0, -5);
+	                	mHandler.postDelayed(moveUp, 0);
 	                    return true;
 	                case MotionEvent.ACTION_UP:
 	                    // No longer down
+	                	mHandler.removeCallbacks(moveUp);
 	                    return true;
 	                }
 	                return false;
 	            }
 	        });
 				
-	        
-	        rightButton2.setOnTouchListener(new OnTouchListener() {
+	        moveRight = new Runnable() {
+	            @Override public void run() {
+	               
+	                mHandler.postDelayed(this, mvspeed);
+	                p.move(5, 0);
+	            }
+	        };
+	        rightButton.setOnTouchListener(new OnTouchListener() {
 	            public boolean onTouch(View v, MotionEvent event) {
 	                switch(event.getAction()) {
 	                case MotionEvent.ACTION_DOWN:
@@ -259,16 +206,26 @@ public class GamePage extends Activity {
 //	                	bullet.setY(p.getPos()[1]);
 //	                	
 //	                	bullet.move(1,0);
+	                	mHandler.postDelayed(moveRight, 0);
+	                	//p.move(5, 0);
 	                    return true;
 	                case MotionEvent.ACTION_UP:
 	                    // No longer down
+	                	mHandler.removeCallbacks(moveRight);
 	                    return true;
 	                }
 	                return false;
 	            }
 	        });
-	    
-	        downButton2.setOnTouchListener(new OnTouchListener() {
+
+	        moveDown = new Runnable() {
+	            @Override public void run() {
+	               
+	                mHandler.postDelayed(this, mvspeed);
+	                p.move(0, 5);
+	            }
+	        };
+	        downButton.setOnTouchListener(new OnTouchListener() {
 	            public boolean onTouch(View v, MotionEvent event) {
 	                switch(event.getAction()) {
 	                case MotionEvent.ACTION_DOWN:
@@ -281,15 +238,18 @@ public class GamePage extends Activity {
 //	                	bullet.setY(p.getPos()[1]);
 //	                	
 //	                	bullet.move(0, -1);
-//	                	
+	                	mHandler.postDelayed(moveDown, 0);
+	                	//p.move(0,5);
 	                    return true;
 	                case MotionEvent.ACTION_UP:
 	                    // No longer down
+	                	mHandler.removeCallbacks(moveDown);
 	                    return true;
 	                }
 	                return false;
 	            }
 	        });
+		
 		a = new int[2];
 		a2 = new int[2];
 		a2[0] = 100;
@@ -313,6 +273,7 @@ public class GamePage extends Activity {
 //		
 
 	}
+
 	protected void onResume(){
 		super.onResume();
 		d.resume();

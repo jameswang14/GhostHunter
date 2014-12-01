@@ -1,6 +1,7 @@
 package com.example.ghosthunter.GridMap;
 
 //Bad practice in general, but should be fine here
+import com.example.ghosthunter.Character.Bullet;
 import com.example.ghosthunter.Character.Character;
 import com.example.ghosthunter.Environment.Environment;
 import android.graphics.drawable.BitmapDrawable;
@@ -12,6 +13,7 @@ public class GridMap {
 	int lenX, lenY;
 	int seed; //will be used for the eventual generation
 	ArrayList<Character> chars;
+	ArrayList<Bullet> bullets;
 	ArrayList<Environment> envis;
 	
 	
@@ -20,6 +22,7 @@ public class GridMap {
 		this.lenY=y;
 		chars = new ArrayList<Character>();
 		envis = new ArrayList<Environment>(); 
+		bullets = new ArrayList<Bullet>();
 	}
 	
 	public void addCharacter(Character character){
@@ -30,10 +33,26 @@ public class GridMap {
 		this.envis.add(environment);
 	}
 	
+	public void addBullet(Bullet bullet)
+	{
+		bullets.add(bullet);
+	}
+	
 	public ArrayList<Character> getCharList(int minX, int maxX, int minY, int maxY){ //returns a list of all the Character objects that need to be drawn
 		Rect rectum = new Rect(minX,maxY, maxX, maxX);
 		ArrayList<Character> hitler = new ArrayList<Character>();
 		for(Character sodomy: this.chars){
+			if(!sodomy.getRect().intersect(rectum))
+				hitler.add(sodomy);
+		}
+		//Character[] himmler = (Character[])hitler.toArray(); //might cause problems with the Object[]  - it did 
+		return hitler;
+	}
+	
+	public ArrayList<Bullet> getBulletList(int minX, int maxX, int minY, int maxY){ //returns a list of all the Character objects that need to be drawn
+		Rect rectum = new Rect(minX,maxY, maxX, maxX);
+		ArrayList<Bullet> hitler = new ArrayList<Bullet>();
+		for(Bullet sodomy: this.bullets){
 			if(!sodomy.getRect().intersect(rectum))
 				hitler.add(sodomy);
 		}
@@ -65,6 +84,11 @@ public class GridMap {
 	 * The TreeSet route would make use of two sorted lists, with all ghosts
 	 * and characters in it. Then it would check against nearby items in the list.
 	 */
+	public void detectBulletHit() //to be completed; automatically checks on each onDraw if a bullet has collided with a ghost
+	{
+		
+	}
+	
 	public boolean moveAllowed(Character A, int direction){
 		int xoff = (int)Math.cos(Math.PI * direction); //calculate the x offset
 		int yoff = (int)Math.sin(Math.PI * direction); // calculate the y offset

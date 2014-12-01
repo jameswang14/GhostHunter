@@ -8,36 +8,44 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.Log;
 import android.view.View.OnTouchListener;
 
-public class Bullet extends Character{
+public class Bullet {
 
 	int x = 0, y = 0;
+	int a = 0, b = 0;
+	int lenY = 25, lenX = 25; //probably will change
 	int velocityX = 2, velocityY = 2;
 	
 	Bitmap[] images = new Bitmap[1];
 	
 	
-	public Bullet(int hp, int armor, GridMap grid, Context context) {
-		super(hp, armor, grid, context);
-		Bitmap b = BitmapFactory.decodeResource(c.getResources(), R.drawable.bullet);
-		images[0] = b;
-		grid.addCharacter(this);
+	public Bullet(int xstart, int ystart, int xdir, int ydir, GridMap grid, Context context) {
+		Bitmap image = BitmapFactory.decodeResource(context.getResources(), R.drawable.bullet);
+		x = xstart;
+		y = ystart;
+		a = xdir;
+		b = ydir;
+		images[0] = image;
+		grid.addBullet(this);
 		
 		
 	}
-
+	public Rect getRect(){
+		return new Rect(this.x,this.y+this.lenY,this.x+this.lenX,this.lenY);
+	}
 
 	//(-1,0) means left, (1,0) menas right, (-1,0) means down, (1,0) up
 	//when move is called, pass these combos to determine the direction of the bullet
-	public void move(int a, int b){
+	public void move(){
 		
 		if(a == -1)
-			this.setX(this.getX() + velocityX);
-		if(a == 1)
 			this.setX(this.getX() - velocityX);
-		if(b == -1 && a == 0)
+		if(a == 1)
+			this.setX(this.getX() + velocityX);
+		if(b == -1)
 			this.setY(this.getY() + velocityY);
 		if(b == 1)
 			this.setY(this.getY() - velocityY);

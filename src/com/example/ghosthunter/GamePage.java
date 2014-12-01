@@ -72,6 +72,7 @@ public class GamePage extends Activity {
 			Button upButton = new Button(this);
 			Button rightButton = new Button(this);
 			Button downButton = new Button(this);
+			Button fireButton = new Button(this);
 			
 			scoreCounter += 1;
 			TextView score = new TextView(d.getContext());
@@ -81,33 +82,40 @@ public class GamePage extends Activity {
 
 	        leftButton.setWidth(100);
 	        leftButton.setMinimumHeight(0);
-	        leftButton.setHeight(50);
+	        leftButton.setHeight(75);
 	        leftButton.setY(800);
 	        leftButton.setX(50);
 	        
 	        upButton.setMinimumWidth(0);
-	        upButton.setWidth(50);
+	        upButton.setWidth(75);
 	        upButton.setHeight(100);
 	        upButton.setY(700);
 	        upButton.setX(150);
 	      
 	        rightButton.setWidth(100);
 	        rightButton.setMinimumHeight(0);
-	        rightButton.setHeight(50);
+	        rightButton.setHeight(75);
 	        rightButton.setY(800);
-	        rightButton.setX(200);
+	        rightButton.setX(225);
 	        
 	        downButton.setMinimumWidth(0);
-	        downButton.setWidth(50);
+	        downButton.setWidth(75);
 	        downButton.setHeight(100);
-	        downButton.setY(850);
+	        downButton.setY(875);
 	        downButton.setX(150);
+	        
+	        fireButton.setMinimumHeight(0);
+	        fireButton.setMinimumWidth(0);
+	        fireButton.setWidth(100);
+	        fireButton.setHeight(100);
+	        fireButton.setY(850);
+	        fireButton.setX(600);
 	        
 	        gameWidgets.addView(upButton);
 	        gameWidgets.addView(leftButton);   
 	        gameWidgets.addView(rightButton);
 	        gameWidgets.addView(downButton);
-	        
+	        gameWidgets.addView(fireButton);
 	        //---------------------------------------------------]
 	        
 
@@ -249,6 +257,49 @@ public class GamePage extends Activity {
 	                return false;
 	            }
 	        });
+	        
+	        fireButton.setOnTouchListener(new OnTouchListener(){
+	        	public boolean onTouch(View v, MotionEvent event) {
+	        		switch(event.getAction()) {
+	        			case MotionEvent.ACTION_DOWN:
+	        			int xdir = 0;
+	        			int ydir= 0;
+	        			int xpadding = 0;
+	        			int ypadding = 0;
+	        			if(p.isUp())
+	        			{
+	        				xpadding=42;
+	        				ypadding=10;
+	        				ydir=1;
+	        			}
+	        			if(p.isDown())
+	        			{
+	        				ydir=-1;
+	        				xpadding=36;
+	        				ypadding=64;
+	        			}
+	        			if(p.isLeft())
+	        			{
+	        				xpadding = 10;
+	        				ypadding = 56;
+	        				xdir = -1;
+	        			}
+	        			if(p.isRight())
+	        			{
+	        				xdir =1;
+	        				xpadding = 72;
+	        				ypadding=56;
+	        			}
+						Bullet temp = temp = new Bullet(p.getPos()[0]+xpadding,p.getPos()[1]+ypadding,xdir,ydir, grid, GamePage.this);
+	        			return true;
+	        		
+	        			case MotionEvent.ACTION_UP:
+	        				return true;
+	        	
+	        		}
+	        		return false;
+	        	}
+	        });
 		
 		a = new int[2];
 		a2 = new int[2];
@@ -316,7 +367,7 @@ public class GamePage extends Activity {
 	
 			Paint paint2 = new Paint(Paint.ANTI_ALIAS_FLAG);
 			paint2.setColor(Color.GREEN);
-
+			grid.detectBulletHit();
 			canvas.drawARGB(255, 0, 0, 0);
 			ArrayList<com.example.ghosthunter.Character.Character> toDraw = grid.getCharList(0, 0, canvas.getWidth(), canvas.getHeight());
 			for(int a = 0; a < toDraw.size(); a++)
@@ -329,7 +380,13 @@ public class GamePage extends Activity {
 					((Ghost)temp).move(1,1,p); //replace with actual direction later
 				
 			}
-		
+			ArrayList<Bullet> bulletDraw = grid.getBulletList(0,0,canvas.getWidth(),canvas.getHeight());
+		for(int a = 0; a < bulletDraw.size(); a++)
+		{
+			Bullet temp = bulletDraw.get(a);
+			bulletDraw.get(a).move();
+			bulletDraw.get(a).update(canvas);
+		}
 
 		}
 		public void pause(){

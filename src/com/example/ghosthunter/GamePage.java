@@ -102,8 +102,6 @@ public class GamePage extends Activity {
 			test.setWidth(45);
 			test.setBackgroundColor(Color.WHITE);
 			
-
-
 	        leftButton.setWidth(100);
 	        leftButton.setMinimumHeight(0);
 	        leftButton.setHeight(75);
@@ -343,6 +341,7 @@ public class GamePage extends Activity {
 	        		
 	        			case MotionEvent.ACTION_UP:
 	        				mHandler.removeCallbacks(fire);
+	        				newgunsound.start();
 	        				return true;
 	        	
 	        		}
@@ -355,6 +354,7 @@ public class GamePage extends Activity {
 	        		switch(event.getAction()) {
 	        			case MotionEvent.ACTION_DOWN:
 	        				if(d.running){
+	        					pausesound.reset();
 	        					pausesound.start();
 	        					d.pause();
 	        					Toast.makeText(GamePage.this, "Paused", Toast.LENGTH_SHORT).show();

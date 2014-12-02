@@ -20,6 +20,7 @@ import android.graphics.Paint.Style;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -56,7 +57,7 @@ public class GamePage extends Activity {
 	int[] a;
 	int[] a2;
 
-	TextView score;
+	static TextView score;
 	GridMap grid = new GridMap(0,0,5,10);
 
 	Runnable moveLeft;
@@ -338,7 +339,6 @@ public class GamePage extends Activity {
 	        	public boolean onTouch(View v, MotionEvent event) {
 	        		switch(event.getAction()) {
 	        			case MotionEvent.ACTION_DOWN:
-	        				
 	        				newgunsound.start();
 	        			mHandler.postDelayed(fire, 0);
 	        			return true;
@@ -434,12 +434,18 @@ public class GamePage extends Activity {
 			
 		}
 		public void onDraw(Canvas canvas) {
-	
+
 			Paint paint2 = new Paint(Paint.ANTI_ALIAS_FLAG);
 			paint2.setColor(Color.GREEN);
-			grid.detectBulletHit();
-			
+			scoreCounter+=grid.detectBulletHit();
+			Handler handler = new Handler(Looper.getMainLooper());
 			canvas.drawARGB(255, 0, 0, 0);
+			handler.post(new Runnable(){
+				public void run()
+				{
+					GamePage.score.setText("Score: " + scoreCounter);
+				}
+			});
 			ArrayList<com.example.ghosthunter.Character.Character> toDraw = grid.getCharList(0, 0, canvas.getWidth(), canvas.getHeight());
 			for(int a = 0; a < toDraw.size(); a++)
 			{

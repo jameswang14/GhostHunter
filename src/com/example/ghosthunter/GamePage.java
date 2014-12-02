@@ -1,6 +1,7 @@
 package com.example.ghosthunter;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.example.ghosthunter.Character.Bullet;
 import com.example.ghosthunter.Character.Player;
@@ -53,11 +54,14 @@ public class GamePage extends Activity {
 	Bullet bullet;
 	int[] a;
 	int[] a2;
-	GridMap grid = new GridMap(0,0,0,0);
+
+	GridMap grid = new GridMap(0,0,5,10);
+
 	Runnable moveLeft;
 	Runnable moveUp;
 	Runnable moveRight;
 	Runnable moveDown;
+	Runnable fire; 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
@@ -73,7 +77,10 @@ public class GamePage extends Activity {
 			Button rightButton = new Button(this);
 			Button downButton = new Button(this);
 			Button fireButton = new Button(this);
+
 			Button pauseButton = new Button(this);
+			Button test = new Button(this);
+
 			
 			scoreCounter += 1;
 			TextView score = new TextView(d.getContext());
@@ -82,6 +89,17 @@ public class GamePage extends Activity {
 			score.setTextColor(Color.parseColor("#FF0000"));
 			score.setText("Score: " + Integer.toString(scoreCounter));
 			
+
+			test.setMinimumHeight(0);
+			test.setMinimumWidth(0);
+			test.setX(200);
+			test.setY(300);
+			test.setHeight(70);
+			test.setWidth(45);
+			test.setBackgroundColor(Color.WHITE);
+			
+
+
 	        leftButton.setWidth(100);
 	        leftButton.setMinimumHeight(0);
 	        leftButton.setHeight(75);
@@ -127,7 +145,12 @@ public class GamePage extends Activity {
 	        gameWidgets.addView(rightButton);
 	        gameWidgets.addView(downButton);
 	        gameWidgets.addView(fireButton);
+
 	        gameWidgets.addView(pauseButton);
+
+	        
+	        //gameWidgets.addView(test);
+
 	        //---------------------------------------------------]
 	        
 	        game.addView(d);
@@ -140,7 +163,7 @@ public class GamePage extends Activity {
 	        moveLeft = new Runnable() {
 	            @Override public void run(){
 	                mHandler.postDelayed(this, mvspeed);
-	                p.move(-5, 0);
+	                p.move(-p.getSpeed(), 0);
 	            }
 	        };
 	        
@@ -174,7 +197,7 @@ public class GamePage extends Activity {
 	            @Override public void run() {
 	               
 	                mHandler.postDelayed(this, mvspeed);
-	                p.move(0, -5);
+	                p.move(0, -p.getSpeed());
 	            }
 	        };
 	        
@@ -209,7 +232,7 @@ public class GamePage extends Activity {
 	            @Override public void run() {
 	               
 	                mHandler.postDelayed(this, mvspeed);
-	                p.move(5, 0);
+	                p.move(p.getSpeed(), 0);
 	            }
 	        };
 	        rightButton.setOnTouchListener(new OnTouchListener() {
@@ -241,7 +264,7 @@ public class GamePage extends Activity {
 	            @Override public void run() {
 	               
 	                mHandler.postDelayed(this, mvspeed);
-	                p.move(0, 5);
+	                p.move(0, p.getSpeed());
 	            }
 	        };
 	        downButton.setOnTouchListener(new OnTouchListener() {
@@ -269,42 +292,52 @@ public class GamePage extends Activity {
 	            }
 	        });
 	        
+	        fire = new Runnable()
+	        {
+	        	public void run()
+	        	{
+	        		int xdir = 0;
+        			int ydir= 0;
+        			int xpadding = 0;
+        			int ypadding = 0;
+        			Bullet temp;
+        			if(p.isUp())
+        			{
+        				xpadding=42;
+        				ypadding=10;
+        				ydir=1;
+        			}
+        			if(p.isDown())
+        			{
+        				ydir=-1;
+        				xpadding=36;
+        				ypadding=64;
+        			}
+        			if(p.isLeft())
+        			{
+        				xpadding = 10;
+        				ypadding = 56;
+        				xdir = -1;
+        			}
+        			if(p.isRight())
+        			{
+        				xdir =1;
+        				xpadding = 72;
+        				ypadding=56;
+        			}
+					temp = new Bullet(p.getPos()[0]+xpadding,p.getPos()[1]+ypadding,xdir,ydir, grid, GamePage.this);
+	        	}
+	        };
+	        
 	        fireButton.setOnTouchListener(new OnTouchListener(){
 	        	public boolean onTouch(View v, MotionEvent event) {
 	        		switch(event.getAction()) {
 	        			case MotionEvent.ACTION_DOWN:
-	        			int xdir = 0;
-	        			int ydir= 0;
-	        			int xpadding = 0;
-	        			int ypadding = 0;
-	        			if(p.isUp())
-	        			{
-	        				xpadding=42;
-	        				ypadding=10;
-	        				ydir=1;
-	        			}
-	        			if(p.isDown())
-	        			{
-	        				ydir=-1;
-	        				xpadding=36;
-	        				ypadding=64;
-	        			}
-	        			if(p.isLeft())
-	        			{
-	        				xpadding = 10;
-	        				ypadding = 56;
-	        				xdir = -1;
-	        			}
-	        			if(p.isRight())
-	        			{
-	        				xdir =1;
-	        				xpadding = 72;
-	        				ypadding=56;
-	        			}
-						Bullet temp = temp = new Bullet(p.getPos()[0]+xpadding,p.getPos()[1]+ypadding,xdir,ydir, grid, GamePage.this);
+	        			mHandler.postDelayed(fire, 0);
 	        			return true;
 	        		
 	        			case MotionEvent.ACTION_UP:
+	        				mHandler.removeCallbacks(fire);
 	        				return true;
 	        	
 	        		}
@@ -397,25 +430,26 @@ public class GamePage extends Activity {
 			Paint paint2 = new Paint(Paint.ANTI_ALIAS_FLAG);
 			paint2.setColor(Color.GREEN);
 			grid.detectBulletHit();
+			
 			canvas.drawARGB(255, 0, 0, 0);
-			ArrayList<com.example.ghosthunter.Character.Character> toDraw = grid.getCharList(0, 0, canvas.getWidth(), canvas.getHeight());
-			for(int a = 0; a < toDraw.size(); a++)
-			{
-				
-				com.example.ghosthunter.Character.Character temp = toDraw.get(a);
-				toDraw.get(a).update(canvas);
-				
-				if(temp instanceof Ghost)
-					((Ghost)temp).move(1,1,p); //replace with actual direction later
-				
-			}
-			ArrayList<Bullet> bulletDraw = grid.getBulletList(0,0,canvas.getWidth(),canvas.getHeight());
-		for(int a = 0; a < bulletDraw.size(); a++)
-		{
-			Bullet temp = bulletDraw.get(a);
-			bulletDraw.get(a).move();
-			bulletDraw.get(a).update(canvas);
-		}
+//			ArrayList<com.example.ghosthunter.Character.Character> toDraw = grid.getCharList(0, 0, canvas.getWidth(), canvas.getHeight());
+//			for(int a = 0; a < toDraw.size(); a++)
+//			{
+//				
+//				com.example.ghosthunter.Character.Character temp = toDraw.get(a);
+//				toDraw.get(a).update(canvas);
+//				
+//				if(temp instanceof Ghost)
+//					((Ghost)temp).move(1,1,p); //replace with actual direction later
+//				
+//			}
+//			CopyOnWriteArrayList<Bullet> bulletDraw = grid.getBulletList(0,0,canvas.getWidth(),canvas.getHeight());
+//		for(int a = 0; a < bulletDraw.size(); a++)
+//		{
+//			Bullet temp = bulletDraw.get(a);
+//			bulletDraw.get(a).move();
+//			bulletDraw.get(a).update(canvas);
+//		}
 
 		}
 		public void pause(){

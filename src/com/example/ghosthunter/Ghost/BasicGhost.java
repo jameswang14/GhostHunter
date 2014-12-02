@@ -30,6 +30,10 @@ public class BasicGhost extends Ghost {
 		Bitmap[] images = new Bitmap[5];
 		images[0] = b;
 		images[1] = b;
+		int[] len = new int[2];
+		len[0] = 50;
+		len[1] = 70;
+		setLen(len);
 		this.setImages(images);
 	}
 	
@@ -46,5 +50,6 @@ public class BasicGhost extends Ghost {
 	public Bitmap draw(){ //currently does NOT use status effects
 		if(super.getDead()) return super.getImages()[0]; 	//rekt
 		else return super.getImages()[1];					//not rekt
+		
 	}
 }

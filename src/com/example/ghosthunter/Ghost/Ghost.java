@@ -7,6 +7,7 @@ import com.example.ghosthunter.GridMap.GridMap;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 
@@ -35,6 +36,20 @@ public abstract class Ghost extends Character {
 		
 		if(nazi[1] > 600 || nazi[1] < 0)
 			this.setVelocityY(-velocityY);
+		
+		int xcor = this.getPos()[0];
+		int ycor = this.getPos()[1];
+		int xcorPlayer = p.getPos()[0];
+		int ycorPlayer = p.getPos()[1];
+		
+		if(xcor>xcorPlayer)
+			this.setVelocityX(-1);
+		if(xcor<xcorPlayer)
+			this.setVelocityX(1);
+		if(ycor>ycorPlayer)
+			this.setVelocityY(-1);
+		if(ycor<ycorPlayer)
+			this.setVelocityY(1);
 		
 		nazi[0] = nazi[0] + this.velocityX; 
 		nazi[1] = nazi[1] + this.velocityY;
@@ -89,7 +104,9 @@ public abstract class Ghost extends Character {
 	}
 	public void update(Canvas c)
 	{
-		 //replace with direction calculation
 		c.drawBitmap(draw(), getPos()[0],getPos()[1],new Paint(Paint.ANTI_ALIAS_FLAG));
+		/*Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+		p.setColor(Color.WHITE);
+		c.drawRect(getRect(), p);*/
 	}
 }

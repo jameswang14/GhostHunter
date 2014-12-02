@@ -63,13 +63,20 @@ public abstract class Character {
 	public Bitmap[] getImages(){
 		return this.images;
 	}
-	
+	public int getHp()
+	{
+		return this.hp;
+	}
+	public void setHp(int h)
+	{
+		this.hp = h;
+	}
 	public int getArmor(){
 		return this.armor;
 	}
 	
 	public Rect getRect(){
-		return new Rect(this.posX,this.posY+this.lenY,this.posX+this.lenX,this.lenY);
+		return new Rect(this.posX,this.posY,this.posX+this.lenX,this.lenY+this.posY);
 	}
 	public void setImages(Bitmap[] images)
 	{

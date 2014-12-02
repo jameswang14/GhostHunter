@@ -4,16 +4,21 @@ package com.example.ghosthunter.GridMap;
 import com.example.ghosthunter.Character.Bullet;
 import com.example.ghosthunter.Character.Character;
 import com.example.ghosthunter.Environment.Environment;
+import com.example.ghosthunter.Ghost.Ghost;
+
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.Rect;
+import android.util.Log;
+
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GridMap {
 	
 	int lenX, lenY;
 	int roomsize,roomcap;
 	ArrayList<Character> chars;
-	ArrayList<Bullet> bullets;
+	CopyOnWriteArrayList<Bullet> bullets;
 	ArrayList<Environment> envis;
 	GridGenerator GG;
 	
@@ -23,11 +28,13 @@ public class GridMap {
 		this.lenY=y;
 		chars = new ArrayList<Character>();
 		envis = new ArrayList<Environment>(); 
-		bullets = new ArrayList<Bullet>();
+
 		
 		//WARNING: These next two functions take computational time
-		GG = new GridGenerator(roomsize, roomcap);
-		envis.addAll(GG.generateWalls(this));
+		//GG = new GridGenerator(roomsize, roomcap);
+		//envis.addAll(GG.generateWalls(this));
+		bullets = new CopyOnWriteArrayList<Bullet>();
+		
 	}
 	
 	public void addCharacter(Character character){
@@ -54,9 +61,9 @@ public class GridMap {
 		return hitler;
 	}
 	
-	public ArrayList<Bullet> getBulletList(int minX, int maxX, int minY, int maxY){ //returns a list of all the Character objects that need to be drawn
+	public CopyOnWriteArrayList<Bullet> getBulletList(int minX, int maxX, int minY, int maxY){ //returns a list of all the Character objects that need to be drawn
 		Rect rectum = new Rect(minX,maxY, maxX, maxX);
-		ArrayList<Bullet> hitler = new ArrayList<Bullet>();
+		CopyOnWriteArrayList<Bullet> hitler = new CopyOnWriteArrayList<Bullet>();
 		for(Bullet sodomy: this.bullets){
 			if(!sodomy.getRect().intersect(rectum))
 				hitler.add(sodomy);
@@ -91,7 +98,29 @@ public class GridMap {
 	 */
 	public void detectBulletHit() //to be completed; automatically checks on each onDraw if a bullet has collided with a ghost
 	{
-		
+		for(int a = 0; a < chars.size(); a++)
+		{
+			for(int b = 0; b < bullets.size();b++)
+			{
+				if(chars.get(a) instanceof Ghost)
+				{
+				if(bullets.get(b).getRect().intersect(chars.get(a).getRect()))
+				{
+					chars.get(a).setHp(chars.get(a).getHp()-5);
+					bullets.remove(b);
+					Log.v("Test", "Bullet hit");
+					if(chars.get(a).getHp() < 1)
+					{
+						chars.remove(a);
+						
+						break;
+					}
+					break;
+						
+				}
+				}
+			}
+		}
 	}
 	
 	public boolean moveAllowed(Character A, int direction){

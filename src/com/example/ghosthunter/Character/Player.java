@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -20,6 +22,7 @@ public class Player extends Character{
 	int vectorX, vectorY;
 	boolean up,down;
 	boolean left, right;
+	int speed = 10;
 
 	public Player(int hp, int armor, GridMap grid,Context context) {
 		super(hp, armor, grid, context);
@@ -34,15 +37,26 @@ public class Player extends Character{
 		images[2] = b3;
 		images[3] = b4;
 		
+		int[] len = new int[2];
+		len[0] = 45; //dimensions based on rigorous empirical testing
+		len[1] = 70;
+		this.setLen(len);
+		
 		this.setImages(images);
 		grid.addCharacter(this);
 		up = false;
 		down = true;
 		
+		
+		
 		left = false;
 		right = false;
 	}
 
+	public Rect getRect()
+	{
+		return new Rect(posX, posY, posX+lenX, posY+lenY);
+	}
 	
 	public void move(int x, int y) {
 		//Log.e("tag", "in move");
@@ -65,6 +79,16 @@ public class Player extends Character{
 		return images[3];
 	}
 
+	public int getSpeed()
+	{
+		return speed;
+	}
+	
+	public void setSpeed(int s)
+	{
+		speed = s;
+	}
+	
 	public boolean isLeft() {
 		return left;
 	}
@@ -107,6 +131,9 @@ public class Player extends Character{
 	public void update(Canvas c)
 	{
 		c.drawBitmap(draw(), getPos()[0],getPos()[1],new Paint(Paint.ANTI_ALIAS_FLAG));
+		/*Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+		p.setColor(Color.WHITE);
+		c.drawRect(getRect(), p);*/
 	}
 	
 

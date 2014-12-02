@@ -52,7 +52,7 @@ public class GamePage extends Activity {
 	Bullet bullet;
 	int[] a;
 	int[] a2;
-	GridMap grid = new GridMap(0,0,0,0, this);
+	GridMap grid = new GridMap(0,0,0,0);
 	Runnable moveLeft;
 	Runnable moveUp;
 	Runnable moveRight;
@@ -374,18 +374,20 @@ public class GamePage extends Activity {
 			{
 				
 				com.example.ghosthunter.Character.Character temp = toDraw.get(a);
+				toDraw.get(a).update(canvas);
 				
 				if(temp instanceof Ghost)
 					((Ghost)temp).move(1,1,p); //replace with actual direction later
 				
 			}
 			ArrayList<Bullet> bulletDraw = grid.getBulletList(0,0,canvas.getWidth(),canvas.getHeight());
-			for(int a = 0; a < bulletDraw.size(); a++)
-			{
-				Bullet temp = bulletDraw.get(a);
-				bulletDraw.get(a).move();
-			}
-			grid.update(canvas, p);
+		for(int a = 0; a < bulletDraw.size(); a++)
+		{
+			Bullet temp = bulletDraw.get(a);
+			bulletDraw.get(a).move();
+			bulletDraw.get(a).update(canvas);
+		}
+
 		}
 		public void pause(){
 			running = false;

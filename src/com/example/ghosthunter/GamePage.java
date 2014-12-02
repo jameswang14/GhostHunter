@@ -32,6 +32,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class GamePage extends Activity {
 	
@@ -77,31 +78,33 @@ public class GamePage extends Activity {
 			scoreCounter += 1;
 			TextView score = new TextView(d.getContext());
 			//score = (TextView) findViewById(R.id.ScoreView);
+			score.setTextSize(30);
+			score.setTextColor(Color.parseColor("#FF0000"));
 			score.setText("Score: " + Integer.toString(scoreCounter));
 			
 	        leftButton.setWidth(100);
 	        leftButton.setMinimumHeight(0);
 	        leftButton.setHeight(75);
-	        leftButton.setY(800);
-	        leftButton.setX(50);
+	        leftButton.setY(835);
+	        leftButton.setX(60);
 	        
 	        upButton.setMinimumWidth(0);
 	        upButton.setWidth(75);
 	        upButton.setHeight(100);
-	        upButton.setY(700);
-	        upButton.setX(150);
+	        upButton.setY(735);
+	        upButton.setX(160);
 	      
 	        rightButton.setWidth(100);
 	        rightButton.setMinimumHeight(0);
 	        rightButton.setHeight(75);
-	        rightButton.setY(800);
-	        rightButton.setX(225);
+	        rightButton.setY(835);
+	        rightButton.setX(235);
 	        
 	        downButton.setMinimumWidth(0);
 	        downButton.setWidth(75);
 	        downButton.setHeight(100);
-	        downButton.setY(875);
-	        downButton.setX(150);
+	        downButton.setY(910);
+	        downButton.setX(160);
 	        
 	        fireButton.setMinimumHeight(0);
 	        fireButton.setMinimumWidth(0);
@@ -109,13 +112,15 @@ public class GamePage extends Activity {
 	        fireButton.setHeight(100);
 	        fireButton.setY(850);
 	        fireButton.setX(600);
+	        fireButton.setText("Fire");
 	        
 	        pauseButton.setMinimumHeight(0);
 	        pauseButton.setMinimumWidth(0);
 	        pauseButton.setWidth(100);
 	        pauseButton.setHeight(100);
 	        pauseButton.setY(950);
-	        pauseButton.setX(600);
+	        pauseButton.setX(345);
+	        pauseButton.setText("Pause");
 	        
 	        gameWidgets.addView(upButton);
 	        gameWidgets.addView(leftButton);   
@@ -311,8 +316,10 @@ public class GamePage extends Activity {
 	        	public boolean onTouch(View v, MotionEvent event) {
 	        		switch(event.getAction()) {
 	        			case MotionEvent.ACTION_DOWN:
-	        				if(d.running)
+	        				if(d.running){
 	        					d.pause();
+	        					Toast.makeText(GamePage.this, "Paused", Toast.LENGTH_SHORT).show();
+	        				}
 	        				else
 	        					d.resume();
 	        				return true;

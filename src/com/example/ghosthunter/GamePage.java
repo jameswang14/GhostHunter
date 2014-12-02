@@ -47,7 +47,9 @@ public class GamePage extends Activity {
 	int playerX = 250;
 	int playerY = 250;
 	static int scoreCounter = 0;
-	int mvspeed = 100; //decrease value to increase speed
+	int mvspeed = 75; //decrease value to increase speed of player
+	String name;
+	
 	
 	Bitmap b;
 	Bitmap b2;
@@ -76,6 +78,14 @@ public class GamePage extends Activity {
 		final MediaPlayer pausesound = MediaPlayer.create(GamePage.this, R.raw.pausesound);
 		final MediaPlayer newgunsound = MediaPlayer.create(GamePage.this, R.raw.gun1);
 		  
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+		    name = extras.getString("Name");
+		    if(name != null)
+		    Log.v("Test", name);
+		    else
+		    	Log.e("Test", "f");
+		}
 			d = new DrawingPanel(this);
 		    FrameLayout game = new FrameLayout(this);
 	        RelativeLayout gameWidgets = new RelativeLayout (this);
@@ -450,6 +460,8 @@ public class GamePage extends Activity {
 						public void run() {
 	
 						Intent gameIntent = new Intent(GamePage.this, DeathScreen.class);
+						gameIntent.putExtra("Name", name);
+						gameIntent.putExtra("Score", scoreCounter);
 						getContext().startActivity(gameIntent);
 
 

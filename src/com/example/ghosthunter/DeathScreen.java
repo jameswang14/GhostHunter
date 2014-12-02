@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,15 +16,27 @@ public class DeathScreen extends Activity {
 
 //	final MediaPlayer buttonSound = MediaPlayer.create(DeathScreen.this, R.raw.button_click);
 
-	
+	String name;
+	int score;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_death_screen);
+		
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+		    name = extras.getString("Name");
+		    score = extras.getInt("Score");
+		    if(name != null)
+		    Log.v("Test", name);
+		    else
+		    	Log.e("Test", "f");
+		}
+		
 		Button gameRestart = (Button) findViewById(R.id.backToGameButton);
 		Button menuRestart = (Button) findViewById(R.id.backToMenuButton);
-//
+		Button highScores = (Button) findViewById(R.id.backToHighScoresButton);
 //		logoMusic = MediaPlayer.create(DeathScreen.this, R.raw.music);
 //		logoMusic.setLooping(true);
 //		logoMusic.start();
@@ -46,6 +59,18 @@ public class DeathScreen extends Activity {
 			public void onClick(View v) {
 				//buttonSound.start();
 				Intent menuIntent = new Intent(DeathScreen.this, MainActivity.class);
+				startActivity(menuIntent);
+			}
+			
+		});
+		highScores.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				//buttonSound.start();
+				Intent menuIntent = new Intent(DeathScreen.this, HighScores.class);
+				menuIntent.putExtra("Name", name);
+				menuIntent.putExtra("Score", score);
 				startActivity(menuIntent);
 			}
 			

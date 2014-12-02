@@ -45,6 +45,10 @@ public class Settings extends Activity implements OnCheckedChangeListener{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				textOut.setText(textIn.getText());
+				buttonSound.start();
+				Intent mainActivityIntent=new Intent(Settings.this,MainActivity.class);
+				mainActivityIntent.putExtra("Name", textIn.getText().toString());
+				startActivity(mainActivityIntent);
 			}
 		});		
 		

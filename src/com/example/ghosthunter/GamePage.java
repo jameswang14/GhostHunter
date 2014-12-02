@@ -17,6 +17,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -67,8 +68,11 @@ public class GamePage extends Activity {
 		
 		super.onCreate(savedInstanceState);
 		final Handler mHandler = new Handler(); 
-
-		    d = new DrawingPanel(this);
+		
+		final MediaPlayer pausesound = MediaPlayer.create(GamePage.this, R.raw.pausesound);
+		final MediaPlayer newgunsound = MediaPlayer.create(GamePage.this, R.raw.newgunsound);
+		  
+			d = new DrawingPanel(this);
 		    FrameLayout game = new FrameLayout(this);
 	        RelativeLayout gameWidgets = new RelativeLayout (this);
 
@@ -333,6 +337,7 @@ public class GamePage extends Activity {
 	        	public boolean onTouch(View v, MotionEvent event) {
 	        		switch(event.getAction()) {
 	        			case MotionEvent.ACTION_DOWN:
+	        				newgunsound.start();
 	        			mHandler.postDelayed(fire, 0);
 	        			return true;
 	        		
@@ -350,6 +355,7 @@ public class GamePage extends Activity {
 	        		switch(event.getAction()) {
 	        			case MotionEvent.ACTION_DOWN:
 	        				if(d.running){
+	        					pausesound.start();
 	        					d.pause();
 	        					Toast.makeText(GamePage.this, "Paused", Toast.LENGTH_SHORT).show();
 	        				}

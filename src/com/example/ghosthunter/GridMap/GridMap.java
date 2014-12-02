@@ -3,6 +3,7 @@ package com.example.ghosthunter.GridMap;
 //Bad practice in general, but should be fine here
 import com.example.ghosthunter.Character.Bullet;
 import com.example.ghosthunter.Character.Character;
+import com.example.ghosthunter.Character.Player;
 import com.example.ghosthunter.Environment.Environment;
 import com.example.ghosthunter.Ghost.Ghost;
 
@@ -85,6 +86,27 @@ public class GridMap {
 	
 	public boolean overlap(Character A, Character B){ //Fairly simple collision detection
 		return A.getRect().intersect(B.getRect());
+	}
+	
+	
+	public boolean detectGhostHit(Player p)
+	{
+		boolean isHit = false;
+
+		for(int a = 0; a < chars.size(); a++)
+		{
+			if(chars.get(a) instanceof Ghost)
+			{
+				if(chars.get(a).getRect().intersect(p.getRect()))
+				{
+					p.setHp(p.getHp()-((Ghost) (chars.get(a))).getDamage());
+					isHit=true;
+				}
+			}
+		}
+		return isHit;
+		
+
 	}
 	
 	/*

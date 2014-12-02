@@ -104,7 +104,7 @@ public class GamePage extends Activity {
 			hp.setTextSize(30);
 			hp.setTextColor(Color.parseColor("#336600"));
 			hp.setText("Health: " + Integer.toString(p.getHp()));
-			hp.setX(c.getWidth() - 200);
+			hp.setX(600);
 			score.setTextSize(30);
 			score.setTextColor(Color.parseColor("#FF0000"));
 			score.setText("Score: " + Integer.toString(scoreCounter));
@@ -416,21 +416,43 @@ public class GamePage extends Activity {
 		private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		Thread t = null;
 		private SurfaceHolder sh;
+		boolean isHit = false;
 		Canvas canvas;
 		boolean running = false;
+		 Thread checkHp = new Thread(new Runnable()
+		 {
+			public void run()
+			{
+				isHit = grid.detectGhostHit(p);
+				if(isHit)
+				 {
+					 try{
+						 Thread.sleep(1000000);
+						 isHit = false;
+					 }
+					 catch(Exception e)
+					 {
+						 e.getLocalizedMessage();
+					 }
+				 }
+			}
+		 });
 		public DrawingPanel(Context context) {
 			super(context);
 			sh = getHolder();
 			paint.setColor(Color.BLUE);
 			paint.setStyle(Style.FILL);
+			
 		
 		}
 		
-
+		
 		@Override
 		public void run() {
+			checkHp.start();
 			while(running)
 			{
+				
 				if(!sh.getSurface().isValid())
 					continue;
 				canvas = sh.lockCanvas();
@@ -438,9 +460,20 @@ public class GamePage extends Activity {
 				{
 					public void run()
 					{
-						GamePage.score.setText("Scores: " + scoreCounter);
+						GamePage.score.setText("Score: " + scoreCounter);
 					}
 				}));
+
+
+				 runOnUiThread(new Thread(new Runnable()
+				 {
+					 public void run()
+					 {
+						 
+						 GamePage.hp.setText("Health: "+p.getHp());
+						 
+ 					 }
+				 }));
 				onDraw(canvas);
 				sh.unlockCanvasAndPost(canvas);
 

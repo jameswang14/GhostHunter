@@ -28,6 +28,7 @@ public class BasicGhost extends Ghost {
 		super(pos, new int[]{1,1}, 15, true, 10, 3, 0, grid,c);
 		Bitmap b=BitmapFactory.decodeResource(c.getResources(), R.drawable.ghostdown1blurry);
 		Bitmap[] images = new Bitmap[5];
+		setDamage(10);
 		images[0] = b;
 		images[1] = b;
 		int[] len = new int[2];

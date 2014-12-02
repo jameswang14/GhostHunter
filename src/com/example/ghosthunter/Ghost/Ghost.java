@@ -43,20 +43,20 @@ public abstract class Ghost extends Character {
 		int ycorPlayer = p.getPos()[1];
 		
 		if(xcor>xcorPlayer)
-			this.setVelocityX(-1);
+			this.setVelocityX(Math.min(-velocityX, velocityX));
 		if(xcor<xcorPlayer)
-			this.setVelocityX(1);
+			this.setVelocityX(Math.abs(velocityX));
 		if(ycor>ycorPlayer)
-			this.setVelocityY(-1);
+			this.setVelocityY(Math.min(-velocityY, velocityY));
 		if(ycor<ycorPlayer)
-			this.setVelocityY(1);
+			this.setVelocityY(Math.abs(velocityY));
 		
 		nazi[0] = nazi[0] + this.velocityX; 
 		nazi[1] = nazi[1] + this.velocityY;
 		
 		super.setPos(nazi);
 	}
-	
+
 	public int getVelocityX() {
 		return velocityX;
 	}

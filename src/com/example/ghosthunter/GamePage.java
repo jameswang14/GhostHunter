@@ -52,7 +52,7 @@ public class GamePage extends Activity {
 	Bullet bullet;
 	int[] a;
 	int[] a2;
-	GridMap grid = new GridMap(0,0,0);
+	GridMap grid = new GridMap(0,0,0,0);
 	Runnable moveLeft;
 	Runnable moveUp;
 	Runnable moveRight;

@@ -96,8 +96,9 @@ public class GridMap {
 	 * The TreeSet route would make use of two sorted lists, with all ghosts
 	 * and characters in it. Then it would check against nearby items in the list.
 	 */
-	public void detectBulletHit() //to be completed; automatically checks on each onDraw if a bullet has collided with a ghost
+	public int detectBulletHit() //to be completed; automatically checks on each onDraw if a bullet has collided with a ghost
 	{
+		int score = 0;
 		for(int a = 0; a < chars.size(); a++)
 		{
 			for(int b = 0; b < bullets.size();b++)
@@ -112,7 +113,7 @@ public class GridMap {
 					if(chars.get(a).getHp() < 1)
 					{
 						chars.remove(a);
-						
+						score++;
 						break;
 					}
 					break;
@@ -121,6 +122,7 @@ public class GridMap {
 				}
 			}
 		}
+		return score;
 	}
 	
 	public boolean moveAllowed(Character A, int direction){

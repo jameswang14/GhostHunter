@@ -45,7 +45,7 @@ public class GamePage extends Activity {
 	int ycor = 0;
 	int playerX = 250;
 	int playerY = 250;
-	int scoreCounter = 0;
+	static int scoreCounter = 0;
 	int mvspeed = 100; //decrease value to increase speed
 	
 	Bitmap b;
@@ -58,6 +58,7 @@ public class GamePage extends Activity {
 	int[] a2;
 
 	static TextView score;
+	static TextView hp;
 	GridMap grid = new GridMap(0,0,5,10);
 
 	Runnable moveLeft;
@@ -78,6 +79,13 @@ public class GamePage extends Activity {
 		    FrameLayout game = new FrameLayout(this);
 	        RelativeLayout gameWidgets = new RelativeLayout (this);
 
+			a2 = new int[2];
+			a2[0] = 100;
+			a2[1] = 200;
+			p = new Player(50, 10, grid, this);
+			p.setPos(a2);
+	        
+	        
 	        Button leftButton = new Button(this);
 			Button upButton = new Button(this);
 			Button rightButton = new Button(this);
@@ -89,9 +97,8 @@ public class GamePage extends Activity {
 
 			
 
-			scoreCounter += 1;
-			TextView score = new TextView(d.getContext());
-			TextView hp = new TextView(d.getContext());
+			score = new TextView(d.getContext());
+			hp = new TextView(d.getContext());
 
 			//score = (TextView) findViewById(R.id.ScoreView);
 			hp.setTextSize(30);
@@ -342,13 +349,13 @@ public class GamePage extends Activity {
 	        	public boolean onTouch(View v, MotionEvent event) {
 	        		switch(event.getAction()) {
 	        			case MotionEvent.ACTION_DOWN:
-	        				newestgunsound.start();
+	        				//newestgunsound.start();
 	        			mHandler.postDelayed(fire, 0);
 	        			return true;
 	        		
 	        			case MotionEvent.ACTION_UP:
 	        				mHandler.removeCallbacks(fire);
-	        				newestgunsound.start();
+	        				//newestgunsound.start();
 	        				return true;
 	        	
 	        		}
@@ -377,9 +384,7 @@ public class GamePage extends Activity {
 	        });
 		
 		a = new int[2];
-		a2 = new int[2];
-		a2[0] = 100;
-		a2[1] = 200;
+
 		int[] location = new int[2];
 		location[0] = 200;
 		location[1] = 200;
@@ -389,9 +394,7 @@ public class GamePage extends Activity {
 		ghost = new BasicGhost(a,grid,this);
 		ghost1 = new BasicGhost(location,grid,this);
 
-		//int hp, Bitmap[] images, int armor, GridMap grid,Context context
-		p = new Player(50, 10, grid, this);
-		p.setPos(a2);
+
 
 //		bullet = new Bullet(10,10,grid,this);
 //		bullet.setX(100);
@@ -431,6 +434,13 @@ public class GamePage extends Activity {
 				if(!sh.getSurface().isValid())
 					continue;
 				canvas = sh.lockCanvas();
+				 runOnUiThread(new Thread(new Runnable()
+				{
+					public void run()
+					{
+						GamePage.score.setText("Scores: " + scoreCounter);
+					}
+				}));
 				onDraw(canvas);
 				sh.unlockCanvasAndPost(canvas);
 
@@ -443,14 +453,9 @@ public class GamePage extends Activity {
 			Paint paint2 = new Paint(Paint.ANTI_ALIAS_FLAG);
 			paint2.setColor(Color.GREEN);
 			scoreCounter+=grid.detectBulletHit();
-			Handler handler = new Handler(Looper.getMainLooper());
+			
 			canvas.drawARGB(255, 0, 0, 0);
-			handler.post(new Runnable(){
-				public void run()
-				{
-					GamePage.score.setText("Score: " + scoreCounter);
-				}
-			});
+
 			ArrayList<com.example.ghosthunter.Character.Character> toDraw = grid.getCharList(0, 0, canvas.getWidth(), canvas.getHeight());
 			for(int a = 0; a < toDraw.size(); a++)
 			{

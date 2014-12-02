@@ -26,6 +26,7 @@ public class Player extends Character{
 
 	public Player(int hp, int armor, GridMap grid,Context context) {
 		super(hp, armor, grid, context);
+		setHp(50);
 		Bitmap b=BitmapFactory.decodeResource(c.getResources(), R.drawable.down1);
 		Bitmap b2=BitmapFactory.decodeResource(c.getResources(), R.drawable.up1);
 		Bitmap b3=BitmapFactory.decodeResource(c.getResources(), R.drawable.left1);

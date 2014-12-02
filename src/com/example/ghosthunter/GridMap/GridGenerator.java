@@ -5,13 +5,14 @@ import android.graphics.drawable.BitmapDrawable;
 import com.example.ghosthunter.Character.Character;
 import com.example.ghosthunter.Environment.*;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GridGenerator {
 	
 	int roomsize;
 	int roomcap;
 	ArrayList<GridRoom> rooms;
-	static int[][] rotator = new int[][]{{1,0},{0,1},{-1,0},{0,1}};
+	static int[][] rotator = new int[][]{{1,0},{0,-1},{-1,0},{0,1}};
 	
 	//This is literally John Madden's marionette of a corpse twisted into code format.
 	//Handles the semi-random generation of the rooms
@@ -49,10 +50,12 @@ public class GridGenerator {
 	
 	//MUST BE RUN IN INITIALIZATION
 	public ArrayList<Environment> generateWalls(GridMap grid, Context context) {
+		
 		ArrayList<Environment> envis = new ArrayList<Environment>();
-		ArrayList<int[]> gridcheck = new ArrayList<int[]>();
-		ArrayList<int[]> roomhold;
+		CopyOnWriteArrayList<int[]> gridcheck = new CopyOnWriteArrayList<int[]>();
+		CopyOnWriteArrayList<int[]> roomhold;
 		ArrayList<int[]> clears = new ArrayList<int[]>();
+		
 		int xoff,yoff,dir;
 		int[] neighbors = new int[4];
 		int caseint = 0;
@@ -62,27 +65,36 @@ public class GridGenerator {
 			//get list of walls
 			roomhold = room.getWalls();
 			for(int[] w : roomhold) {
-				if(!gridcheck.contains(w)) gridcheck.add(w);
+				gridcheck.add(w);
 			}
 			//get list of clears
 			roomhold = room.getClears();
 			for(int[] c : roomhold) {
-				if(!clears.contains(c)) clears.add(c);
+				clears.add(c);
 			}
 		}
 		//remove all clear spots
-		gridcheck.removeAll(clears);
+		for(int[] twall : gridcheck) {
+			for(int[] tclear : clears) {
+				if(twall[0]==tclear[0] && twall[1]==tclear[1]) gridcheck.remove(twall);
+			}
+		}
 		
+		//SHOULD HAVE USED A MAP
 		for(int[] w : gridcheck) {
+			neighbors = new int[]{0,0,0,0};
 			wall = new Wall(w, context);
 			for(int i=0; i<4; i++) {
 				//check all adjacent tiles for other walls
-				if(gridcheck.contains(new int[]{w[0]+GridGenerator.rotator[i][0],w[1]+GridGenerator.rotator[i][1]})) {
-					neighbors[i]=1; //check off that box as containing a wall
+				for(int[] ww : gridcheck) {
+					if(w[0]+GridGenerator.rotator[i][0]==ww[0] && w[1]+GridGenerator.rotator[i][1]==ww[1]) {
+						neighbors[i]=1; //check off that box as containing a wall
+						break;
+					}
 				}
 			}
 			//convert the neighbors list to an int as if in binary
-			for(int i=0; i<4; i++) caseint+=(int)((Math.pow((double)(2),(double)neighbors[i])));
+			caseint=neighbors[0]*8+neighbors[1]*4+neighbors[2]*2+neighbors[3];
 			
 			//Refer to the Wall.java file
 			switch(caseint) {

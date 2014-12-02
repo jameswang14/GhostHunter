@@ -313,7 +313,7 @@ public class GamePage extends Activity {
 		//int[] pos, int[] len, int hp, BitmapDrawable[] images, boolean ignoresWalls, int damage, int speed, int armor, GridMap grid
 
 		Wall.processImages(this); //process the wall images
-		grid = new GridMap(10,10,5,5, this);
+		grid = new GridMap(10,10,5,10, this);
 		ghost = new BasicGhost(a,grid,this);
 		ghost1 = new BasicGhost(location,grid,this);
 		

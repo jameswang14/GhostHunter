@@ -1,6 +1,7 @@
 package com.example.ghosthunter.GridMap;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import android.graphics.Rect;
 
@@ -26,8 +27,8 @@ public class GridRoom {
 
 	// Generates the spaces in the rooms
 	// Also handles the construction of hallways
-	public ArrayList<int[]> getClears() {
-		ArrayList<int[]> clears = new ArrayList<int[]>();
+	public CopyOnWriteArrayList<int[]> getClears() {
+		CopyOnWriteArrayList<int[]> clears = new CopyOnWriteArrayList<int[]>();
 
 		// main region
 		for (int i = 0; i < this.lenX; i++) {
@@ -50,10 +51,11 @@ public class GridRoom {
 
 	// Coats the clears in a nice layer of walls
 	// Then makes room for the filling
-	public ArrayList<int[]> getWalls() {
-		ArrayList<int[]> walls = new ArrayList<int[]>();
-		ArrayList<int[]> clears = this.getClears();
+	public CopyOnWriteArrayList<int[]> getWalls() {
+		CopyOnWriteArrayList<int[]> walls = new CopyOnWriteArrayList<int[]>();
+		CopyOnWriteArrayList<int[]> clears = this.getClears();
 		
+		//spincoating
 		for (int[] curr : clears) {
 			for (int i = -1; i < 2; i++) {
 				for (int j = -1; j < 2; j++) {
@@ -61,7 +63,13 @@ public class GridRoom {
 				}
 			}
 		}
-		walls.removeAll(clears);
+		
+		//hollowing
+		for(int[] twall : walls) {
+			for(int[] tclear : clears) {
+				if(twall[0]==tclear[0] && twall[1]==tclear[1]) walls.remove(twall);
+			}
+		}
 
 		return walls;
 	}

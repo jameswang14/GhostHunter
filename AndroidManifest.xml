@@ -48,6 +48,10 @@
             android:name=".DeathScreen"
             android:label="@string/title_activity_death_screen" >
         </activity>
+        <activity
+            android:name=".HighScores"
+            android:label="@string/title_activity_high_scores" >
+        </activity>
     </application>
 
 </manifest>

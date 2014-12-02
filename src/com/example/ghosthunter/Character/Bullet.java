@@ -7,6 +7,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.Log;
@@ -14,10 +15,11 @@ import android.view.View.OnTouchListener;
 
 public class Bullet {
 
-	int x = 0, y = 0;
+	int x;
+	int y;
 	int a = 0, b = 0;
-	int lenY = 25, lenX = 25; //probably will change
-	int velocityX = 2, velocityY = 2;
+	int lenY = 10, lenX = 10; //probably will change
+	int velocityX = 3, velocityY = 3;
 	
 	Bitmap[] images = new Bitmap[1];
 	
@@ -34,7 +36,7 @@ public class Bullet {
 		
 	}
 	public Rect getRect(){
-		return new Rect(this.x,this.y+this.lenY,this.x+this.lenX,this.lenY);
+		return new Rect(this.x,this.y,this.x+this.lenX,this.lenY+this.y);
 	}
 
 	//(-1,0) means left, (1,0) menas right, (-1,0) means down, (1,0) up
@@ -55,8 +57,12 @@ public class Bullet {
 		return images[0];
 	}
 	
+	
 	public void update(Canvas c){
 		c.drawBitmap(draw(), this.getX(), this.getY(), new Paint(Paint.ANTI_ALIAS_FLAG));
+		/*Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+		p.setColor(Color.WHITE);
+		c.drawRect(getRect(), p);*/
 	}
 
 	public int getX() {

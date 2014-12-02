@@ -39,12 +39,12 @@ public class KamikazeGhost extends Ghost {
 		else return super.getImages()[1];					//not rekt
 	}
 	
-	@Override
-	public int damage(Character target){ //overriden as necessary
-		int deal = target.getArmor()-super.getDamage();
-		if(deal<0) deal=1;
-		target.takeDamage(deal);
+	
+	public void damage(Character target){ //overriden as necessary
+		//int deal = target.getArmor()-super.getDamage();
+		//if(deal<0) deal=1;
+		target.takeDamage(this.getDamage());
 		damage(this); //where the ghost kills itself
-		return deal; //in case we want to display the damage for whatever reason
+		//return deal; //in case we want to display the damage for whatever reason
 	}
 }

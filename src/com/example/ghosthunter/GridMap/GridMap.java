@@ -5,33 +5,40 @@ import com.example.ghosthunter.Character.Bullet;
 import com.example.ghosthunter.Character.Character;
 import com.example.ghosthunter.Character.Player;
 import com.example.ghosthunter.Environment.Environment;
+
 import com.example.ghosthunter.Ghost.*;
 
 import android.content.Context;
+
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.util.Log;
+
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GridMap {
 	
 	int lenX, lenY;
 	int roomsize,roomcap;
 	ArrayList<Character> chars;
-	ArrayList<Bullet> bullets;
+	CopyOnWriteArrayList<Bullet> bullets;
 	ArrayList<Environment> envis;
 	GridGenerator GG;
 	
 	public GridMap(int x, int y, int roomsize, int roomcap, Context context){
 		this.lenX=x;
 		this.lenY=y;
+
 		this.chars = new ArrayList<Character>();
 		this.envis = new ArrayList<Environment>(); 
-		this.bullets = new ArrayList<Bullet>();
+		this.bullets = new CopyOnWriteArrayList<Bullet>();
 		
 //		WARNING: These next two functions take computational time
 		this.GG = new GridGenerator(roomsize, roomcap);
 		this.envis.addAll(GG.generateWalls(this, context));
+
 	}
 	
 	public void addCharacter(Character character){
@@ -58,9 +65,9 @@ public class GridMap {
 		return hitler;
 	}
 	
-	public ArrayList<Bullet> getBulletList(int minX, int maxX, int minY, int maxY){ //returns a list of all the Character objects that need to be drawn
+	public CopyOnWriteArrayList<Bullet> getBulletList(int minX, int maxX, int minY, int maxY){ //returns a list of all the Character objects that need to be drawn
 		Rect rectum = new Rect(minX,maxY, maxX, maxX);
-		ArrayList<Bullet> hitler = new ArrayList<Bullet>();
+		CopyOnWriteArrayList<Bullet> hitler = new CopyOnWriteArrayList<Bullet>();
 		for(Bullet sodomy: this.bullets){
 			if(!sodomy.getRect().intersect(rectum))
 				hitler.add(sodomy);
@@ -82,6 +89,27 @@ public class GridMap {
 		return A.getRect().intersect(B.getRect());
 	}
 	
+	
+	public boolean detectGhostHit(Player p)
+	{
+		boolean isHit = false;
+
+		for(int a = 0; a < chars.size(); a++)
+		{
+			if(chars.get(a) instanceof Ghost)
+			{
+				if(chars.get(a).getRect().intersect(p.getRect()))
+				{
+					p.setHp(p.getHp()-((Ghost) (chars.get(a))).getDamage());
+					isHit=true;
+				}
+			}
+		}
+		return isHit;
+		
+
+	}
+	
 	/*
 	 * Right now this checks against all other sprites.
 	 * This is quite inefficient, but this is the quickest way to code.
@@ -91,9 +119,33 @@ public class GridMap {
 	 * The TreeSet route would make use of two sorted lists, with all ghosts
 	 * and characters in it. Then it would check against nearby items in the list.
 	 */
-	public void detectBulletHit() //to be completed; automatically checks on each onDraw if a bullet has collided with a ghost
+	public int detectBulletHit() //to be completed; automatically checks on each onDraw if a bullet has collided with a ghost
 	{
-		
+		int score = 0;
+		for(int a = 0; a < chars.size(); a++)
+		{
+			for(int b = 0; b < bullets.size();b++)
+			{
+				if(chars.get(a) instanceof Ghost)
+				{
+				if(bullets.get(b).getRect().intersect(chars.get(a).getRect()))
+				{
+					chars.get(a).setHp(chars.get(a).getHp()-5);
+					bullets.remove(b);
+					Log.v("Test", "Bullet hit");
+					if(chars.get(a).getHp() < 1)
+					{
+						chars.remove(a);
+						score++;
+						break;
+					}
+					break;
+						
+				}
+				}
+			}
+		}
+		return score;
 	}
 	
 	public boolean moveAllowed(Character A, int direction){

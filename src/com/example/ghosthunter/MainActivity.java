@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ public class MainActivity extends Activity {
 	//THIS IS THE CHANGE
 	
 	MediaPlayer logoMusic;
+	String name;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +25,20 @@ public class MainActivity extends Activity {
 		logoMusic = MediaPlayer.create(MainActivity.this, R.raw.music);
 		logoMusic.setLooping(true);
 		logoMusic.start();
-		
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+		    name = extras.getString("Name");
+		    if(name != null)
+		    Log.v("Test", name);
+		    else
+		    	Log.e("Test", "f");
+		}
 		final MediaPlayer buttonSound = MediaPlayer.create(MainActivity.this, R.raw.button_click);
 		
 		//Setting up Menu Button References
 		Button gameStart = (Button) findViewById(R.id.startGameButton);
 		Button settings = (Button) findViewById(R.id.settingsButton);
+		Button highscores = (Button) findViewById(R.id.highscoresButton);
 		
 		gameStart.setOnClickListener(new View.OnClickListener() {
 
@@ -36,6 +46,10 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				buttonSound.start();
 				Intent gameIntent = new Intent(MainActivity.this, GamePage.class);
+				if(name !=null)
+				{
+					gameIntent.putExtra("Name", name);
+				}
 				startActivity(gameIntent);
 			}
 			
@@ -51,6 +65,17 @@ public class MainActivity extends Activity {
 				startActivity(settingsIntent);
 			}
 			
+		});
+		
+		highscores.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				buttonSound.start();
+				Intent highscoresIntent = new Intent(MainActivity.this, HighScores.class);
+				startActivity(highscoresIntent);
+			}
 		});
 		
 	}

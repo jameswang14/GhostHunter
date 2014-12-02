@@ -13,7 +13,11 @@
     <string name="settings">Settings</string>
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_game_page">GamePage</string>
+    <string name="title_activity_death_screen">DeathScreen</string>
     <string name="description">Description</string>
     <string name="titleText">Matthew Ledwith, Ryan Aubrey,\nJames Wang, Andrew Coffee\nUniversity of Virginia\nCS2110 - Fall 2104</string>
-	<string name="score">Score: </string>
+    <string name="score">Score: </string>
+    <string name="title_activity_high_scores">HighScores</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>

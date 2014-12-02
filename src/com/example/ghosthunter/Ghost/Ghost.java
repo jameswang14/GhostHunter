@@ -76,11 +76,10 @@ public abstract class Ghost extends Character {
 	//this will be for the pathfinding
 	public abstract int getNextDirection(Character target); //offers the possibility of ghost-ghost anger
 	
-	public int damage(Character target){ //to be overriden as necessary
-		int deal = target.getArmor()-this.damage;
-		if(deal<0) deal=1;
-		target.takeDamage(deal);
-		return deal; //in case we want to display the damage for whatever reason
+	public void damage(Character target){ //to be overriden as necessary
+		
+		target.takeDamage(damage);
+		 //in case we want to display the damage for whatever reason
 	}
 
 	public int getSpeed(){

@@ -63,7 +63,6 @@ public class GamePage extends Activity {
 		super.onCreate(savedInstanceState);
 		final Handler mHandler = new Handler(); 
 
-
 		    d = new DrawingPanel(this);
 		    FrameLayout game = new FrameLayout(this);
 	        RelativeLayout gameWidgets = new RelativeLayout (this);
@@ -73,13 +72,13 @@ public class GamePage extends Activity {
 			Button rightButton = new Button(this);
 			Button downButton = new Button(this);
 			Button fireButton = new Button(this);
+			Button pauseButton = new Button(this);
 			
 			scoreCounter += 1;
 			TextView score = new TextView(d.getContext());
 			//score = (TextView) findViewById(R.id.ScoreView);
 			score.setText("Score: " + Integer.toString(scoreCounter));
 			
-
 	        leftButton.setWidth(100);
 	        leftButton.setMinimumHeight(0);
 	        leftButton.setHeight(75);
@@ -111,14 +110,21 @@ public class GamePage extends Activity {
 	        fireButton.setY(850);
 	        fireButton.setX(600);
 	        
+	        pauseButton.setMinimumHeight(0);
+	        pauseButton.setMinimumWidth(0);
+	        pauseButton.setWidth(100);
+	        pauseButton.setHeight(100);
+	        pauseButton.setY(950);
+	        pauseButton.setX(600);
+	        
 	        gameWidgets.addView(upButton);
 	        gameWidgets.addView(leftButton);   
 	        gameWidgets.addView(rightButton);
 	        gameWidgets.addView(downButton);
 	        gameWidgets.addView(fireButton);
+	        gameWidgets.addView(pauseButton);
 	        //---------------------------------------------------]
 	        
-
 	        game.addView(d);
 	        gameWidgets.addView(score);
 
@@ -296,6 +302,22 @@ public class GamePage extends Activity {
 	        			case MotionEvent.ACTION_UP:
 	        				return true;
 	        	
+	        		}
+	        		return false;
+	        	}
+	        });
+	        
+	        pauseButton.setOnTouchListener(new OnTouchListener(){
+	        	public boolean onTouch(View v, MotionEvent event) {
+	        		switch(event.getAction()) {
+	        			case MotionEvent.ACTION_DOWN:
+	        				if(d.running)
+	        					d.pause();
+	        				else
+	        					d.resume();
+	        				return true;
+	        			case MotionEvent.ACTION_UP:
+	        				return true;
 	        		}
 	        		return false;
 	        	}

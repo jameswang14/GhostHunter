@@ -387,20 +387,11 @@ public class GamePage extends Activity {
 		a = new int[2];
 
 		int[] location = new int[2];
-		location[0] = 200;
-		location[1] = 200;
-		//int[] pos, int[] len, int hp, BitmapDrawable[] images, boolean ignoresWalls, int damage, int speed, int armor, GridMap grid
-
+		location[0] = 600;
+		location[1] = 600;
 
 		ghost = new BasicGhost(a,grid,this);
 		ghost1 = new BasicGhost(location,grid,this);
-
-
-
-//		bullet = new Bullet(10,10,grid,this);
-//		bullet.setX(100);
-//		bullet.setY(100);
-//		
 
 	}
 

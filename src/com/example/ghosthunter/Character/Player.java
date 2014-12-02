@@ -22,7 +22,7 @@ public class Player extends Character{
 	int vectorX, vectorY;
 	boolean up,down;
 	boolean left, right;
-	int speed = 10;
+	int speed = 13;
 
 	public Player(int hp, int armor, GridMap grid,Context context) {
 		super(hp, armor, grid, context);

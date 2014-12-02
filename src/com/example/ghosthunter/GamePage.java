@@ -93,6 +93,9 @@ public class GamePage extends Activity {
 		    FrameLayout game = new FrameLayout(this);
 	        RelativeLayout gameWidgets = new RelativeLayout (this);
 
+			Wall.processImages(this); //process the wall images
+			grid = new GridMap(10,10,5,10, this);
+	        
 			a2 = new int[2];
 			a2[0] = 100;
 			a2[1] = 200;
@@ -399,8 +402,7 @@ public class GamePage extends Activity {
 		
 		a = new int[2];
 
-		Wall.processImages(this); //process the wall images
-		grid = new GridMap(10,10,5,10, this);
+
 
 		int[] location = new int[2];
 		location[0] = 600;
@@ -409,8 +411,6 @@ public class GamePage extends Activity {
 		ghost = new BasicGhost(a,grid,this);
 		ghost1 = new BasicGhost(location,grid,this);
 		
-		Wall shittest = new Wall(new int[]{100,100}, this);
-		grid.addEnvironment(shittest);
 
 	}
 

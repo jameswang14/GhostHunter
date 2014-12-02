@@ -1,6 +1,8 @@
 package com.example.ghosthunter;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -8,19 +10,25 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
 
 public class HighScores extends Activity {
 	
-	SharedPreferences.Editor editorNames = getSharedPreferences("Names", MODE_PRIVATE).edit();
-	SharedPreferences Names = getSharedPreferences("Names", MODE_PRIVATE);
+
 
 	String name;
 	int score;
+	View mainLayout;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+		SharedPreferences.Editor editorNames = getSharedPreferences("Names", MODE_PRIVATE).edit();
+		SharedPreferences Names = getSharedPreferences("Names", MODE_PRIVATE);
 		setContentView(R.layout.activity_high_scores);
+		mainLayout = (View)findViewById(R.id.mainLayout);
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			if(name!=null)
@@ -32,7 +40,26 @@ public class HighScores extends Activity {
 		}
 		
 		
-		Map<String, ?> map = Names.getAll();
+		HashMap<String, ?> map = (HashMap<String, ?>) Names.getAll();
+		for(Map.Entry<String,?> entry : map.entrySet()) {
+			  String key = entry.getKey();
+			  Integer value = (Integer) entry.getValue();
+			  TextView temp = new TextView(this);
+			  TextView temp1 = new TextView(this);
+			  temp.setText(key);
+			  temp.setTextSize(30);
+			  temp.setX(200);
+			  temp.setY(300);
+			  temp1.setText(Integer.toString(value));
+			  temp1.setTextSize(30);
+			  temp1.setX(500);
+			  temp1.setY(300);
+			   ((ViewGroup) mainLayout).addView(temp);
+			   ((ViewGroup) mainLayout).addView(temp1);
+			  
+			}
+		
+
 		
 	}
 

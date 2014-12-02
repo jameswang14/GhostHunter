@@ -2,6 +2,7 @@ package com.example.ghosthunter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,20 +19,21 @@ public class DeathScreen extends Activity {
 
 	String name;
 	int score;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_death_screen);
+		SharedPreferences.Editor editorNames = getSharedPreferences("Names", MODE_PRIVATE).edit();
 		
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
+			if(name!=null)
+			{			
 		    name = extras.getString("Name");
 		    score = extras.getInt("Score");
-		    if(name != null)
-		    Log.v("Test", name);
-		    else
-		    	Log.e("Test", "f");
+		    editorNames.putInt(name, score);
+			}
 		}
 		
 		Button gameRestart = (Button) findViewById(R.id.backToGameButton);

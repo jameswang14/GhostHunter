@@ -1,5 +1,6 @@
 package com.example.ghosthunter.GridMap;
 
+import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import com.example.ghosthunter.Character.Character;
 import com.example.ghosthunter.Environment.*;
@@ -11,6 +12,7 @@ public class GridGenerator {
 	int roomcap;
 	ArrayList<GridRoom> rooms;
 	BitmapDrawable[] images; //TO PUT THE WALL IMAGES HERE
+	Context context;
 	
 	//This is literally John Madden's marionette of a corpse twisted into code format.
 	//Handles the semi-random generation of the rooms
@@ -19,9 +21,10 @@ public class GridGenerator {
 	//Spacing is handled on integer increments. I don't know the sizing for the rest of the
 	//images, so all of these need to be scaled.
 
-	public GridGenerator(int roomsize, int roomcap) {
+	public GridGenerator(int roomsize, int roomcap, Context context) {
 		GridRoom temproom;
 		rooms = new ArrayList<GridRoom>();
+		this.context=context;
 		for (int i = 0; i < roomcap; i++) {
 			temproom = CreateRoom((roomsize + (int) (3 * Math.random()) - 1),
 					((int) (i * Math.random())) * roomsize,
@@ -73,7 +76,7 @@ public class GridGenerator {
 		gridcheck.removeAll(clears);
 		
 		for(int[] w : gridcheck) {
-			wall = new Wall(this.images,grid,w);
+			wall = new Wall(grid,w, this.context);
 			envis.add(wall);
 			for(int i=0; i<4; i++) {
 				xoff = (int)Math.cos(Math.PI * i); //calculate the x offset

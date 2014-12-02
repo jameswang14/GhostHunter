@@ -87,9 +87,9 @@ public abstract class Ghost extends Character {
 		if(super.getDead()) return super.getImages()[0]; 	//rekt
 		else return super.getImages()[1];					//not rekt
 	}
-	public void update(Canvas c)
+	public void update(Canvas c, int[] offset)
 	{
 		 //replace with direction calculation
-		c.drawBitmap(draw(), getPos()[0],getPos()[1],new Paint(Paint.ANTI_ALIAS_FLAG));
+		c.drawBitmap(draw(), getPos()[0]-offset[0],getPos()[1]-offset[1],new Paint(Paint.ANTI_ALIAS_FLAG));
 	}
 }

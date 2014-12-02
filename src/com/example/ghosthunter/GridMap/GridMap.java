@@ -3,8 +3,13 @@ package com.example.ghosthunter.GridMap;
 //Bad practice in general, but should be fine here
 import com.example.ghosthunter.Character.Bullet;
 import com.example.ghosthunter.Character.Character;
+import com.example.ghosthunter.Character.Player;
 import com.example.ghosthunter.Environment.Environment;
+import com.example.ghosthunter.Ghost.*;
+
+import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Canvas;
 import android.graphics.Rect;
 import java.util.ArrayList;
 
@@ -16,17 +21,18 @@ public class GridMap {
 	ArrayList<Bullet> bullets;
 	ArrayList<Environment> envis;
 	GridGenerator GG;
+	Context context;
 	
-	
-	public GridMap(int x, int y, int roomsize, int roomcap){
+	public GridMap(int x, int y, int roomsize, int roomcap, Context context){
 		this.lenX=x;
 		this.lenY=y;
-		chars = new ArrayList<Character>();
-		envis = new ArrayList<Environment>(); 
-		bullets = new ArrayList<Bullet>();
+		this.chars = new ArrayList<Character>();
+		this.envis = new ArrayList<Environment>(); 
+		this.bullets = new ArrayList<Bullet>();
+		this.context=context;
 		
 		//WARNING: These next two functions take computational time
-		GG = new GridGenerator(roomsize, roomcap);
+		GG = new GridGenerator(roomsize, roomcap, context);
 		envis.addAll(GG.generateWalls(this));
 	}
 	
@@ -61,7 +67,6 @@ public class GridMap {
 			if(!sodomy.getRect().intersect(rectum))
 				hitler.add(sodomy);
 		}
-		//Character[] himmler = (Character[])hitler.toArray(); //might cause problems with the Object[]  - it did 
 		return hitler;
 	}
 	
@@ -72,7 +77,6 @@ public class GridMap {
 			if(!sodomy.getRect().intersect(rectum))
 				hitler.add(sodomy);
 		}
-		Environment[] himmler = (Environment[])hitler.toArray();
 		return hitler;
 	}
 	
@@ -112,6 +116,17 @@ public class GridMap {
 			}
 		}
 		return true;
+	}
+	
+	public void update(Canvas c, Player player) {
+		int[] offset = player.getPos();
+		for(Environment e : this.envis) {
+			e.update(c, offset);
+		}
+		for(Character g : this.chars){
+			if(!(g instanceof Player)) ((Ghost)g).update(c, offset);
+			else ((Player)g).update(c);
+		}
 	}
 	
 }

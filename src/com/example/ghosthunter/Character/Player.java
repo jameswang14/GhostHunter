@@ -21,8 +21,8 @@ public class Player extends Character{
 	boolean up,down;
 	boolean left, right;
 
-	public Player(int hp, int armor, GridMap grid,Context context) {
-		super(hp, armor, grid, context);
+	public Player(int hp, int armor, GridMap grid,Context c) {
+		super(hp, armor, grid, c);
 		Bitmap b=BitmapFactory.decodeResource(c.getResources(), R.drawable.down1);
 		Bitmap b2=BitmapFactory.decodeResource(c.getResources(), R.drawable.up1);
 		Bitmap b3=BitmapFactory.decodeResource(c.getResources(), R.drawable.left1);

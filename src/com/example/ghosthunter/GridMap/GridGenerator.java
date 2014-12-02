@@ -9,7 +9,7 @@ public class GridGenerator {
 	
 	int roomsize;
 	int roomcap;
-	GridRoom[] rooms;
+	ArrayList<GridRoom> rooms;
 	BitmapDrawable[] images; //TO PUT THE WALL IMAGES HERE
 	
 	//This is literally John Madden's marionette of a corpse twisted into code format.
@@ -21,16 +21,17 @@ public class GridGenerator {
 
 	public GridGenerator(int roomsize, int roomcap) {
 		GridRoom temproom;
+		rooms = new ArrayList<GridRoom>();
 		for (int i = 0; i < roomcap; i++) {
 			temproom = CreateRoom((roomsize + (int) (3 * Math.random()) - 1),
 					((int) (i * Math.random())) * roomsize,
 					((int) (i * Math.random())) * roomsize);
 			for (GridRoom all : rooms) {
 				while (this.overlap(all, temproom)) {
-					temproom.shift((int) (2 * Math.random()),
-							(int) (2 * Math.random()));
+					temproom.shift((int) (2 * Math.random()),(int) (2 * Math.random()));
 				}
 			}
+			this.rooms.add(temproom);
 		}
 	}
 
@@ -56,7 +57,7 @@ public class GridGenerator {
 		int caseint = 0;
 		Wall wall;
 		
-		for(GridRoom room : rooms) {
+		for(GridRoom room : this.rooms) {
 			//get list of walls
 			roomhold = room.getWalls();
 			for(int[] w : roomhold) {

@@ -89,11 +89,19 @@ public class GamePage extends Activity {
 
 			
 
-			score = new TextView(d.getContext());
+			scoreCounter += 1;
+			TextView score = new TextView(d.getContext());
+			TextView hp = new TextView(d.getContext());
+
 			//score = (TextView) findViewById(R.id.ScoreView);
+			hp.setTextSize(30);
+			hp.setTextColor(Color.parseColor("#336600"));
+			hp.setText("Health: " + Integer.toString(p.getHp()));
+			hp.setX(c.getWidth() - 200);
 			score.setTextSize(30);
 			score.setTextColor(Color.parseColor("#FF0000"));
 			score.setText("Score: " + Integer.toString(scoreCounter));
+			
 			
 
 			test.setMinimumHeight(0);
@@ -159,7 +167,7 @@ public class GamePage extends Activity {
 	        
 	        game.addView(d);
 	        gameWidgets.addView(score);
-
+	        gameWidgets.addView(hp);
 	        game.addView(gameWidgets);
 
 	        setContentView(game);
@@ -280,10 +288,7 @@ public class GamePage extends Activity {
 	                	
 	                	p.setLeft(false);
 	                	p.setRight(false);
-//	                	bullet.setX(p.getPos()[0]);
-//	                	bullet.setY(p.getPos()[1]);
-//	                	
-//	                	bullet.move(0, -1);
+
 	                	mHandler.postDelayed(moveDown, 0);
 	                	//p.move(0,5);
 	                    return true;

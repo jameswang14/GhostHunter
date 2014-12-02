@@ -73,7 +73,7 @@ public class GamePage extends Activity {
 		final Handler mHandler = new Handler(); 
 		
 		final MediaPlayer pausesound = MediaPlayer.create(GamePage.this, R.raw.pausesound);
-		final MediaPlayer newestgunsound = MediaPlayer.create(GamePage.this, R.raw.newestgunsound);
+		final MediaPlayer newgunsound = MediaPlayer.create(GamePage.this, R.raw.gun1);
 		  
 			d = new DrawingPanel(this);
 		    FrameLayout game = new FrameLayout(this);
@@ -349,7 +349,7 @@ public class GamePage extends Activity {
 	        	public boolean onTouch(View v, MotionEvent event) {
 	        		switch(event.getAction()) {
 	        			case MotionEvent.ACTION_DOWN:
-	        				//newestgunsound.start();
+	        				newgunsound.start();
 	        			mHandler.postDelayed(fire, 0);
 	        			return true;
 	        		

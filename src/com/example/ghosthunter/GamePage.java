@@ -11,6 +11,7 @@ import com.example.ghosthunter.GridMap.GridMap;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -437,7 +438,8 @@ public class GamePage extends Activity {
 			paint.setColor(Color.BLUE);
 			paint.setStyle(Style.FILL);
 			handler = new Handler();
-		
+			t = new Thread(this);
+			t.start();
 		}
 		
 		
@@ -449,6 +451,22 @@ public class GamePage extends Activity {
 				if(!sh.getSurface().isValid())
 					continue;
 				canvas = sh.lockCanvas();
+				if(p.getHp() <1)
+				{
+					running = false;
+					runOnUiThread(new Thread(new Runnable()
+					{
+						public void run() {
+	
+						Intent gameIntent = new Intent(GamePage.this, DeathScreen.class);
+						getContext().startActivity(gameIntent);
+
+
+							
+						}
+					}));
+
+				}
 				 runOnUiThread(new Thread(new Runnable()
 				{
 					public void run()
@@ -489,6 +507,7 @@ public class GamePage extends Activity {
 
 			Paint paint2 = new Paint(Paint.ANTI_ALIAS_FLAG);
 			paint2.setColor(Color.GREEN);
+
 			scoreCounter+=grid.detectBulletHit();
 			
 			canvas.drawARGB(255, 0, 0, 0);

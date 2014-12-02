@@ -430,13 +430,7 @@ public class GamePage extends Activity {
 
 			}
 		 };
-		 Runnable dummy = new Runnable()
-		 {
-			 public void run()
-			 {
-				 
-			 }
-		 };
+
 		public DrawingPanel(Context context) {
 			super(context);
 			sh = getHolder();
@@ -465,7 +459,7 @@ public class GamePage extends Activity {
 				 end = System.currentTimeMillis();
 				 if(isHit && end - start > 2000)
 				 {
-					 handler.postAtTime(dummy,0);
+
 					 isHit = false;
 				 }
 				 else if (!isHit)

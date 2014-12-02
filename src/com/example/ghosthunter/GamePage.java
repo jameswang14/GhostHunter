@@ -17,8 +17,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,6 +57,7 @@ public class GamePage extends Activity {
 	int[] a;
 	int[] a2;
 
+	static TextView score;
 	GridMap grid = new GridMap(0,0,5,10);
 
 	Runnable moveLeft;
@@ -67,8 +70,11 @@ public class GamePage extends Activity {
 		
 		super.onCreate(savedInstanceState);
 		final Handler mHandler = new Handler(); 
-
-		    d = new DrawingPanel(this);
+		
+		final MediaPlayer pausesound = MediaPlayer.create(GamePage.this, R.raw.pausesound);
+		final MediaPlayer newgunsound = MediaPlayer.create(GamePage.this, R.raw.newgunsound);
+		  
+			d = new DrawingPanel(this);
 		    FrameLayout game = new FrameLayout(this);
 	        RelativeLayout gameWidgets = new RelativeLayout (this);
 
@@ -82,9 +88,11 @@ public class GamePage extends Activity {
 			Button test = new Button(this);
 
 			
+
 			scoreCounter += 1;
 			TextView score = new TextView(d.getContext());
 			TextView hp = new TextView(d.getContext());
+
 			//score = (TextView) findViewById(R.id.ScoreView);
 			hp.setTextSize(30);
 			hp.setTextColor(Color.parseColor("#336600"));
@@ -104,8 +112,6 @@ public class GamePage extends Activity {
 			test.setWidth(45);
 			test.setBackgroundColor(Color.WHITE);
 			
-
-
 	        leftButton.setWidth(100);
 	        leftButton.setMinimumHeight(0);
 	        leftButton.setHeight(75);
@@ -336,11 +342,13 @@ public class GamePage extends Activity {
 	        	public boolean onTouch(View v, MotionEvent event) {
 	        		switch(event.getAction()) {
 	        			case MotionEvent.ACTION_DOWN:
+	        				newgunsound.start();
 	        			mHandler.postDelayed(fire, 0);
 	        			return true;
 	        		
 	        			case MotionEvent.ACTION_UP:
 	        				mHandler.removeCallbacks(fire);
+	        				newgunsound.start();
 	        				return true;
 	        	
 	        		}
@@ -353,6 +361,8 @@ public class GamePage extends Activity {
 	        		switch(event.getAction()) {
 	        			case MotionEvent.ACTION_DOWN:
 	        				if(d.running){
+	        					pausesound.reset();
+	        					pausesound.start();
 	        					d.pause();
 	        					Toast.makeText(GamePage.this, "Paused", Toast.LENGTH_SHORT).show();
 	        				}
@@ -429,30 +439,36 @@ public class GamePage extends Activity {
 			
 		}
 		public void onDraw(Canvas canvas) {
-	
+
 			Paint paint2 = new Paint(Paint.ANTI_ALIAS_FLAG);
 			paint2.setColor(Color.GREEN);
-			grid.detectBulletHit();
-			
+			scoreCounter+=grid.detectBulletHit();
+			Handler handler = new Handler(Looper.getMainLooper());
 			canvas.drawARGB(255, 0, 0, 0);
-//			ArrayList<com.example.ghosthunter.Character.Character> toDraw = grid.getCharList(0, 0, canvas.getWidth(), canvas.getHeight());
-//			for(int a = 0; a < toDraw.size(); a++)
-//			{
-//				
-//				com.example.ghosthunter.Character.Character temp = toDraw.get(a);
-//				toDraw.get(a).update(canvas);
-//				
-//				if(temp instanceof Ghost)
-//					((Ghost)temp).move(1,1,p); //replace with actual direction later
-//				
-//			}
-//			CopyOnWriteArrayList<Bullet> bulletDraw = grid.getBulletList(0,0,canvas.getWidth(),canvas.getHeight());
-//		for(int a = 0; a < bulletDraw.size(); a++)
-//		{
-//			Bullet temp = bulletDraw.get(a);
-//			bulletDraw.get(a).move();
-//			bulletDraw.get(a).update(canvas);
-//		}
+			handler.post(new Runnable(){
+				public void run()
+				{
+					GamePage.score.setText("Score: " + scoreCounter);
+				}
+			});
+			ArrayList<com.example.ghosthunter.Character.Character> toDraw = grid.getCharList(0, 0, canvas.getWidth(), canvas.getHeight());
+			for(int a = 0; a < toDraw.size(); a++)
+			{
+				
+				com.example.ghosthunter.Character.Character temp = toDraw.get(a);
+				toDraw.get(a).update(canvas);
+				
+				if(temp instanceof Ghost)
+					((Ghost)temp).move(1,1,p); //replace with actual direction later
+				
+			}
+			CopyOnWriteArrayList<Bullet> bulletDraw = grid.getBulletList(0,0,canvas.getWidth(),canvas.getHeight());
+		for(int a = 0; a < bulletDraw.size(); a++)
+		{
+			Bullet temp = bulletDraw.get(a);
+			bulletDraw.get(a).move();
+			bulletDraw.get(a).update(canvas);
+		}
 
 		}
 		public void pause(){

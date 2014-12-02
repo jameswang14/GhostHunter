@@ -416,40 +416,39 @@ public class GamePage extends Activity {
 		private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		Thread t = null;
 		private SurfaceHolder sh;
+		long start;
+		long end;
+		Handler handler; 
 		boolean isHit = false;
 		Canvas canvas;
 		boolean running = false;
-		 Thread checkHp = new Thread(new Runnable()
-		 {
+		Runnable r = new Runnable()
+		{
 			public void run()
 			{
 				isHit = grid.detectGhostHit(p);
-				if(isHit)
-				 {
-					 try{
-						 Thread.sleep(1000000);
-						 isHit = false;
-					 }
-					 catch(Exception e)
-					 {
-						 e.getLocalizedMessage();
-					 }
-				 }
+
 			}
-		 });
+		 };
+		 Runnable dummy = new Runnable()
+		 {
+			 public void run()
+			 {
+				 
+			 }
+		 };
 		public DrawingPanel(Context context) {
 			super(context);
 			sh = getHolder();
 			paint.setColor(Color.BLUE);
 			paint.setStyle(Style.FILL);
-			
+			handler = new Handler();
 		
 		}
 		
 		
 		@Override
 		public void run() {
-			checkHp.start();
 			while(running)
 			{
 				
@@ -463,8 +462,19 @@ public class GamePage extends Activity {
 						GamePage.score.setText("Score: " + scoreCounter);
 					}
 				}));
-
-
+				 end = System.currentTimeMillis();
+				 if(isHit && end - start > 2000)
+				 {
+					 handler.postAtTime(dummy,0);
+					 isHit = false;
+				 }
+				 else if (!isHit)
+				 {
+					 handler.post(r);
+					 isHit=true;
+					 start = System.currentTimeMillis();
+				 }
+				 
 				 runOnUiThread(new Thread(new Runnable()
 				 {
 					 public void run()

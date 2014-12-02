@@ -1,6 +1,8 @@
 package com.example.ghosthunter.Environment;
 
 import com.example.ghosthunter.GridMap.GridMap;
+
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -12,17 +14,17 @@ public abstract class Environment {
 	private boolean walkable,destructible;
 	private int status; //contains facing direction and destroyed or not
 	private Bitmap[] images; //for destructibles, this will have more images
+	Context c;
 	
-	public Environment(boolean walkable, boolean destructible, GridMap grid){
+	public Environment(boolean walkable, boolean destructible, Context c){
 		this.status = 0;
 		this.walkable=walkable;
 		this.destructible=destructible;
-		grid.addEnvironment(this);
+		this.c=c;
 	}
 	
 	// I define these functions because they are needed for all environment subtypes
 
-	public abstract Bitmap draw();
 	public abstract void update(Canvas c, int[] offset);
 	
 	//Getters
@@ -52,9 +54,7 @@ public abstract class Environment {
 		return this.destructible;
 	}
 	
-	public Bitmap[] getImages(){
-		return this.images;
-	}
+	public abstract Bitmap getImages();
 	
 	public Rect getRect(){
 		return new Rect(this.posX,this.posY+this.lenY,this.posX+this.lenX,this.lenY);
@@ -68,8 +68,8 @@ public abstract class Environment {
 	}
 	
 	public void setPos(int[] pos){
-		this.posX=pos[0];
-		this.posY=pos[1];
+		this.posX=pos[0]*100;
+		this.posY=pos[1]*100;
 	}
 	
 	//I don't know why we would need this, but it can't hurt to have

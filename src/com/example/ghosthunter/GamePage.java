@@ -7,6 +7,7 @@ import com.example.ghosthunter.Character.Player;
 import com.example.ghosthunter.Ghost.BasicGhost;
 import com.example.ghosthunter.Ghost.Ghost;
 import com.example.ghosthunter.GridMap.GridMap;
+import com.example.ghosthunter.Environment.Wall;
 
 import android.app.Activity;
 import android.content.Context;
@@ -52,11 +53,12 @@ public class GamePage extends Activity {
 	Bullet bullet;
 	int[] a;
 	int[] a2;
-	GridMap grid = new GridMap(0,0,0,0, this);
+	GridMap grid;
 	Runnable moveLeft;
 	Runnable moveUp;
 	Runnable moveRight;
 	Runnable moveDown;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
@@ -310,9 +312,13 @@ public class GamePage extends Activity {
 		location[1] = 200;
 		//int[] pos, int[] len, int hp, BitmapDrawable[] images, boolean ignoresWalls, int damage, int speed, int armor, GridMap grid
 
-
+		Wall.processImages(this); //process the wall images
+		grid = new GridMap(10,10,5,5, this);
 		ghost = new BasicGhost(a,grid,this);
 		ghost1 = new BasicGhost(location,grid,this);
+		
+		Wall shittest = new Wall(new int[]{100,100}, this);
+		grid.addEnvironment(shittest);
 
 		//int hp, Bitmap[] images, int armor, GridMap grid,Context context
 		p = new Player(50, 10, grid, this);

@@ -61,7 +61,7 @@ public class GridRoom {
 				}
 			}
 		}
-		walls.remove(clears);
+		walls.removeAll(clears);
 
 		return walls;
 	}

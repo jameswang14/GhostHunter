@@ -21,7 +21,6 @@ public class GridMap {
 	ArrayList<Bullet> bullets;
 	ArrayList<Environment> envis;
 	GridGenerator GG;
-	Context context;
 	
 	public GridMap(int x, int y, int roomsize, int roomcap, Context context){
 		this.lenX=x;
@@ -29,11 +28,10 @@ public class GridMap {
 		this.chars = new ArrayList<Character>();
 		this.envis = new ArrayList<Environment>(); 
 		this.bullets = new ArrayList<Bullet>();
-		this.context=context;
 		
-		//WARNING: These next two functions take computational time
-		GG = new GridGenerator(roomsize, roomcap, context);
-		envis.addAll(GG.generateWalls(this));
+//		WARNING: These next two functions take computational time
+		this.GG = new GridGenerator(roomsize, roomcap);
+		this.envis.addAll(GG.generateWalls(this, context));
 	}
 	
 	public void addCharacter(Character character){

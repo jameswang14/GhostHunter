@@ -11,8 +11,7 @@ public class GridGenerator {
 	int roomsize;
 	int roomcap;
 	ArrayList<GridRoom> rooms;
-	BitmapDrawable[] images; //TO PUT THE WALL IMAGES HERE
-	Context context;
+	static int[][] rotator = new int[][]{{1,0},{0,1},{-1,0},{0,1}};
 	
 	//This is literally John Madden's marionette of a corpse twisted into code format.
 	//Handles the semi-random generation of the rooms
@@ -21,10 +20,9 @@ public class GridGenerator {
 	//Spacing is handled on integer increments. I don't know the sizing for the rest of the
 	//images, so all of these need to be scaled.
 
-	public GridGenerator(int roomsize, int roomcap, Context context) {
+	public GridGenerator(int roomsize, int roomcap) {
 		GridRoom temproom;
 		rooms = new ArrayList<GridRoom>();
-		this.context=context;
 		for (int i = 0; i < roomcap; i++) {
 			temproom = CreateRoom((roomsize + (int) (3 * Math.random()) - 1),
 					((int) (i * Math.random())) * roomsize,
@@ -50,7 +48,7 @@ public class GridGenerator {
 	}
 	
 	//MUST BE RUN IN INITIALIZATION
-	public ArrayList<Environment> generateWalls(GridMap grid) {
+	public ArrayList<Environment> generateWalls(GridMap grid, Context context) {
 		ArrayList<Environment> envis = new ArrayList<Environment>();
 		ArrayList<int[]> gridcheck = new ArrayList<int[]>();
 		ArrayList<int[]> roomhold;
@@ -69,26 +67,22 @@ public class GridGenerator {
 			//get list of clears
 			roomhold = room.getClears();
 			for(int[] c : roomhold) {
-				if(!gridcheck.contains(c)) clears.add(c);
+				if(!clears.contains(c)) clears.add(c);
 			}
 		}
 		//remove all clear spots
 		gridcheck.removeAll(clears);
 		
 		for(int[] w : gridcheck) {
-			wall = new Wall(grid,w, this.context);
-			envis.add(wall);
+			wall = new Wall(w, context);
 			for(int i=0; i<4; i++) {
-				xoff = (int)Math.cos(Math.PI * i); //calculate the x offset
-				yoff = (int)Math.sin(Math.PI * i); // calculate the y offset
-				
 				//check all adjacent tiles for other walls
-				if(gridcheck.contains(new int[]{w[0]+xoff,w[1]+yoff})) {
+				if(gridcheck.contains(new int[]{w[0]+GridGenerator.rotator[i][0],w[1]+GridGenerator.rotator[i][1]})) {
 					neighbors[i]=1; //check off that box as containing a wall
 				}
 			}
 			//convert the neighbors list to an int as if in binary
-			for(double i=0; i<4; i++) caseint+=(int)(Math.pow((double)(2),i));
+			for(int i=0; i<4; i++) caseint+=(int)((Math.pow((double)(2),(double)neighbors[i])));
 			
 			//Refer to the Wall.java file
 			switch(caseint) {
@@ -111,6 +105,7 @@ public class GridGenerator {
 				default: dir = 11; break;
 			}
 			wall.setDirection(dir);
+			envis.add(wall);
 		}
 		
 		return envis;

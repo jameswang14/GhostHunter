@@ -5,12 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnTouchListener;
-
 import com.example.ghosthunter.R;
 import com.example.ghosthunter.GridMap.GridMap;
 
@@ -21,9 +15,9 @@ public class Player extends Character{
 	boolean up,down;
 	boolean left, right;
 
-	public Player(int hp, int armor, GridMap grid,Context c) {
-		super(hp, armor, grid, c);
-		Bitmap b=BitmapFactory.decodeResource(c.getResources(), R.drawable.down1);
+	public Player(int hp, int armor, GridMap grid, Context context) {
+		super(hp, armor, grid, context);
+		Bitmap b =BitmapFactory.decodeResource(c.getResources(), R.drawable.down1);
 		Bitmap b2=BitmapFactory.decodeResource(c.getResources(), R.drawable.up1);
 		Bitmap b3=BitmapFactory.decodeResource(c.getResources(), R.drawable.left1);
 		Bitmap b4=BitmapFactory.decodeResource(c.getResources(), R.drawable.right1);
@@ -104,9 +98,10 @@ public class Player extends Character{
 		this.down = down;
 	}
 	
+	//800 x 1280
 	public void update(Canvas c)
 	{
-		c.drawBitmap(draw(), getPos()[0],getPos()[1],new Paint(Paint.ANTI_ALIAS_FLAG));
+		c.drawBitmap(draw(),350,490,new Paint(Paint.ANTI_ALIAS_FLAG));
 	}
 	
 

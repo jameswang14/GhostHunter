@@ -1,12 +1,13 @@
 package com.example.ghosthunter.Environment;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Bitmap;
 import com.example.ghosthunter.R;
-import com.example.ghosthunter.GridMap.GridMap;
+import android.graphics.Matrix;
 
 //Requires a larger number of images
 /*
@@ -30,50 +31,18 @@ import com.example.ghosthunter.GridMap.GridMap;
 public class Wall extends Environment{
 	
 	int direction; //also handles intersection stuff
+	static Bitmap[] images;
 	
-	//WARNING: NEEDS THE WALL IMAGES
-	
-	public Wall(GridMap grid, int[] pos, Context c){
-		super(false,false,grid); //not destructible and not walkable
+	public Wall(int[] pos, Context context){
+		super(false,false,context); //not destructible and not walkable
 		
 		//WARNING: This needs to be scaled
 		super.setLen(new int[]{1,1});
 		
 		super.setPos(pos);
-		//direction is set later
-		
-		Bitmap b00=BitmapFactory.decodeResource(c.getResources(), R.drawable.wall00);
-		Bitmap b01=BitmapFactory.decodeResource(c.getResources(), R.drawable.wall01);
-		Bitmap b02=BitmapFactory.decodeResource(c.getResources(), R.drawable.wall02);
-		Bitmap b03=BitmapFactory.decodeResource(c.getResources(), R.drawable.wall03);
-		Bitmap b04=BitmapFactory.decodeResource(c.getResources(), R.drawable.wall04);
-		Bitmap b05=BitmapFactory.decodeResource(c.getResources(), R.drawable.wall05);
-		Bitmap b06=BitmapFactory.decodeResource(c.getResources(), R.drawable.wall06);
-		Bitmap b07=BitmapFactory.decodeResource(c.getResources(), R.drawable.wall07);
-		Bitmap b08=BitmapFactory.decodeResource(c.getResources(), R.drawable.wall08);
-		Bitmap b09=BitmapFactory.decodeResource(c.getResources(), R.drawable.wall09);
-		Bitmap b10=BitmapFactory.decodeResource(c.getResources(), R.drawable.wall10);
-		Bitmap b11=BitmapFactory.decodeResource(c.getResources(), R.drawable.wall11);
-		
-		Bitmap[] images = new Bitmap[12];
-		images[0] = b00;
-		images[1] = b01;
-		images[2] = b02;
-		images[3] = b03;
-		images[4] = b04;
-		images[5] = b05;
-		images[6] = b06;
-		images[7] = b07;
-		images[8] = b08;
-		images[9] = b09;
-		images[10] = b10;
-		images[11] = b11;
-		
-		super.setImages(images);
-	}
-	
-	public Bitmap draw() {
-		return super.getImages()[direction];
+		//direction set later
+
+
 	}
 	
 	//Checking for intersections handled elsewhere
@@ -81,9 +50,50 @@ public class Wall extends Environment{
 		this.direction=dir;
 	}
 	
-	public void update(Canvas c, int[] offset)
-	{
-		 //replace with direction calculation
-		c.drawBitmap(this.draw(), (float)(super.getPos()[0]-offset[0]),(float)(super.getPos()[1]-offset[1]),new Paint(Paint.ANTI_ALIAS_FLAG));
+	public Bitmap getImages() {
+		return Wall.images[this.direction];
 	}
+	
+	public static void processImages(Context context) {
+		Bitmap[] images = new Bitmap[12];
+		
+		images[0] = BitmapFactory.decodeResource(context.getResources(), R.drawable.wall00);
+		images[1] = BitmapFactory.decodeResource(context.getResources(), R.drawable.wall01);
+		images[2] = BitmapFactory.decodeResource(context.getResources(), R.drawable.wall02);
+		images[3] = BitmapFactory.decodeResource(context.getResources(), R.drawable.wall03);
+		images[4] = BitmapFactory.decodeResource(context.getResources(), R.drawable.wall04);
+		images[5] = BitmapFactory.decodeResource(context.getResources(), R.drawable.wall05);
+		images[6] = BitmapFactory.decodeResource(context.getResources(), R.drawable.wall06);
+		images[7] = BitmapFactory.decodeResource(context.getResources(), R.drawable.wall07);
+		images[8] = BitmapFactory.decodeResource(context.getResources(), R.drawable.wall08);
+		images[9] = BitmapFactory.decodeResource(context.getResources(), R.drawable.wall09);
+		images[10] = BitmapFactory.decodeResource(context.getResources(), R.drawable.wall10);
+		images[11] = BitmapFactory.decodeResource(context.getResources(), R.drawable.wall11);
+		
+		Wall.images = images;
+	}
+	
+	public void update(Canvas c, int[] offset) {
+		c.drawBitmap(this.getImages(), super.getPos()[0]-offset[0],super.getPos()[1]-offset[1], new Paint(Paint.ANTI_ALIAS_FLAG));
+	}
+	
+//	public void update(Canvas c, int[] offset)
+//	{
+//		Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+//		paint.setColor(Color.WHITE);
+//		
+//		 //replace with direction calculation
+//		if(this.direction[0]==1)
+//			c.drawRect(this.getPos()[0]+50-offset[0],this.getPos()[1]+40-offset[1],this.getPos()[0]+100-offset[0],this.getPos()[1]+60-offset[1],paint);
+//		if(this.direction[1]==1)
+//			c.drawRect(this.getPos()[0]+40-offset[0],this.getPos()[1]-offset[1],this.getPos()[0]+60-offset[0],this.getPos()[1]+50-offset[1],paint);
+//		if(this.direction[2]==1)
+//			c.drawRect(this.getPos()[0]-offset[0],this.getPos()[1]+40-offset[1],this.getPos()[0]+50-offset[0],this.getPos()[1]+60-offset[1],paint);
+//		if(this.direction[3]==1)
+//			c.drawRect(this.getPos()[0]+40-offset[0],this.getPos()[1]+50-offset[1],this.getPos()[0]+60-offset[0],this.getPos()[1]+100-offset[1],paint);
+//		if(this.direction==new int[]{0,0,0,0})
+//			c.drawRect(this.getPos()[0]+40-offset[0],this.getPos()[1]+40-offset[1],this.getPos()[0]+60-offset[0],this.getPos()[1]+60-offset[1],paint);
+//		
+//
+//	}
 }
